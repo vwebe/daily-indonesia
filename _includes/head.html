@@ -1,38 +1,24 @@
----
-layout: default
----
-
-<article class="article">
-  <header class="article-header">
-    <p class="post-meta">{{ page.date | date: "%d %B %Y" }}</p>
-    <h1>{{ page.title }}</h1>
-    {% if page.description %}<p>{{ page.description }}</p>{% endif %}
-
-    {% if page.tags %}
-      <div class="tag-row">
-        {% for tag in page.tags %}
-          <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </header>
-
-  {% assign post_image = page.image | default: '/assets/img/default-news.svg' %}
-  {% if post_image %}
-    <figure class="article-image article-image--cropped">
-      {% if post_image contains '://' %}
-        <img src="{{ post_image }}" alt="{{ page.title | escape }}" loading="lazy">
-      {% else %}
-        <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
-      {% endif %}
-
-      {% if page.image_caption %}
-        <figcaption>{{ page.image_caption }}</figcaption>
-      {% endif %}
-    </figure>
-  {% endif %}
-
-  <div class="article-body">
-    {{ content }}
-  </div>
-</article>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% assign page_title = page.seo_title | default: page.title | default: site.title %}
+  {% assign page_description = page.seo_description | default: page.description | default: site.description %}
+  {% assign page_image = page.image | default: '/assets/img/default-news.svg' %}
+  <title>{% if page_title and page_title != site.title %}{{ page_title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ page_description | strip_html | normalize_whitespace | escape }}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:description" content="{{ page_description | strip_html | normalize_whitespace | escape }}">
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  {% if page_image contains '://' %}<meta property="og:image" content="{{ page_image }}">{% else %}<meta property="og:image" content="{{ page_image | absolute_url }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  <meta name="twitter:description" content="{{ page_description | strip_html | normalize_whitespace | escape }}">
+  {% if page_image contains '://' %}<meta name="twitter:image" content="{{ page_image }}">{% else %}<meta name="twitter:image" content="{{ page_image | absolute_url }}">{% endif %}
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
