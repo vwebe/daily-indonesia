@@ -1,0 +1,17 @@
+si utama">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/tags/' | relative_url }}">Tags</a>
+        <a href="{{ '/about/' | relative_url }}">Tentang</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {{ content }}
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. Konten original berbasis sumber publik.</p>
+      <p><a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a> · <a href="{{ '/sitemap.xml' | relative_url }}">Sitemap</a></p>
+    </footer>
+  </body>
+</html>
