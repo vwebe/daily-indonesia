@@ -23,3 +23,7 @@ defaults:
       layout: post
       author: "Daily Indonesia Bola"
       image: "/assets/img/default-news.svg"
+  - scope:
+      path: ""
+    values:
+      layout: default

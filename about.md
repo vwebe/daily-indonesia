@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Tentang Daily Indonesia
-description: Tentang blog Daily Indonesia.
+title: Tentang
 permalink: /about/
+description: Tentang Daily Indonesia Bola.
 ---
 
-Daily Indonesia adalah blog berita harian yang menyajikan ringkasan, konteks, dan pembahasan topik populer di Indonesia.
+Daily Indonesia Bola adalah blog berita sepak bola yang menyajikan ringkasan, konteks, dan pembahasan topik harian secara cepat dibaca.
 
-Setiap artikel ditulis sebagai konten original berbasis sumber publik. Jika artikel memakai sumber rujukan, tautan sumber akan dicantumkan di bagian artikel.
+Artikel di blog ini dibuat sebagai tulisan original berbasis topik dan metadata dari sumber publik. Fokus utama blog ini adalah sepak bola Indonesia, tim nasional, liga internasional, transfer, jadwal, hasil, dan isu pertandingan.

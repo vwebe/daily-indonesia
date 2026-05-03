@@ -1,36 +1,27 @@
 ---
-layout: default
+layout: page
 title: Tags
-description: Jelajahi artikel Daily Indonesia berdasarkan tag.
 permalink: /tags/
+description: Kumpulan tag artikel Daily Indonesia Bola.
 ---
 
-<section class="section-header">
-  <h1>Tags</h1>
-  <p>Temukan artikel berdasarkan kategori dan kata kunci.</p>
-</section>
-
-{% assign all_tags = site.tags | sort %}
-{% if all_tags.size > 0 %}
-  <div class="tag-cloud">
-    {% for tag in all_tags %}
-      <a class="tag" href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
-    {% endfor %}
-  </div>
-
-  {% for tag in all_tags %}
-    <section class="tag-section" id="{{ tag[0] | slugify }}">
-      <h2>{{ tag[0] }}</h2>
-      <ul class="post-list">
-        {% for post in tag[1] %}
-          <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <span>{{ post.date | date: "%d %b %Y" }}</span></li>
-        {% endfor %}
-      </ul>
-    </section>
+<div class="tag-cloud">
+  {% assign tags = site.tags | sort %}
+  {% for tag in tags %}
+    <a class="tag tag--large" href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
   {% endfor %}
-{% else %}
-  <article class="empty-state">
-    <h2>Belum ada tag.</h2>
-    <p>Tag akan muncul setelah auto script menerbitkan artikel.</p>
-  </article>
-{% endif %}
+</div>
+
+{% for tag in tags %}
+  <section class="tag-section" id="{{ tag[0] | slugify }}">
+    <h2>{{ tag[0] }}</h2>
+    <ul class="post-list">
+      {% for post in tag[1] %}
+        <li>
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span>{{ post.date | date: "%d %b %Y" }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endfor %}
