@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vwebe.github.io/daily-indonesia/sitemap.xml
