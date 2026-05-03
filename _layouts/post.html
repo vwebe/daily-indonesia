@@ -4,7 +4,7 @@ layout: default
 
 <article class="article">
   <header class="article-header">
-    <p class="post-meta">{{ page.date | date: "%d %B %Y" }}{% if page.source_site %} · Sumber: {{ page.source_site }}{% endif %}</p>
+    <p class="post-meta">{{ page.date | date: "%d %B %Y" }}</p>
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p>{{ page.description }}</p>{% endif %}
     {% if page.tags %}
@@ -24,17 +24,13 @@ layout: default
       {% else %}
         <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
       {% endif %}
+      {% if page.image_caption %}
+        <figcaption>{{ page.image_caption }}</figcaption>
+      {% endif %}
     </figure>
   {% endif %}
 
   <div class="article-body">
     {{ content }}
   </div>
-
-  {% if page.source_site or page.source_title %}
-    <aside class="source-box">
-      <strong>Sumber topik:</strong>
-      {{ page.source_site | default: 'Kompas' }}{% if page.source_title %} — {{ page.source_title }}{% endif %}
-    </aside>
-  {% endif %}
 </article>
