@@ -1,5 +1,5 @@
-title: "Daily Indonesia"
-description: "Berita harian Indonesia dengan ringkasan jelas, konteks penting, dan sudut pandang yang mudah dipahami."
+title: "Daily Indonesia Bola"
+description: "Berita sepak bola harian Indonesia dan dunia dengan ringkasan jelas, jadwal, hasil, transfer, klasemen, dan konteks pertandingan."
 url: "https://vwebe.github.io"
 baseurl: "/daily-indonesia"
 lang: "id-ID"
@@ -21,5 +21,5 @@ defaults:
       type: "posts"
     values:
       layout: post
-      author: "Daily Indonesia"
+      author: "Daily Indonesia Bola"
       image: "/assets/img/default-news.svg"
