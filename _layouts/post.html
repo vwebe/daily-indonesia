@@ -18,8 +18,12 @@ layout: default
 
   {% assign post_image = page.image | default: '/assets/img/default-news.svg' %}
   {% if post_image %}
-    <figure class="article-image">
-      <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
+    <figure class="article-image article-image--cropped">
+      {% if post_image contains '://' %}
+        <img src="{{ post_image }}" alt="{{ page.title | escape }}" loading="lazy">
+      {% else %}
+        <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
+      {% endif %}
     </figure>
   {% endif %}
 
@@ -27,10 +31,10 @@ layout: default
     {{ content }}
   </div>
 
-  {% if page.source_url %}
+  {% if page.source_site or page.source_title %}
     <aside class="source-box">
-      <strong>Sumber rujukan:</strong>
-      <a href="{{ page.source_url }}" rel="nofollow noopener" target="_blank">{{ page.source_title | default: page.source_url }}</a>
+      <strong>Sumber topik:</strong>
+      {{ page.source_site | default: 'Kompas' }}{% if page.source_title %} — {{ page.source_title }}{% endif %}
     </aside>
   {% endif %}
 </article>
