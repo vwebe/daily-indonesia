@@ -1,0 +1,25 @@
+title: "Daily Indonesia"
+description: "Berita harian Indonesia dengan ringkasan jelas, konteks penting, dan sudut pandang yang mudah dipahami."
+url: "https://vwebe.github.io"
+baseurl: "/daily-indonesia"
+lang: "id-ID"
+timezone: "Asia/Jakarta"
+
+permalink: /:year/:month/:day/:title/
+future: false
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+feed:
+  path: feed.xml
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+      author: "Daily Indonesia"
+      image: "/assets/img/default-news.svg"
