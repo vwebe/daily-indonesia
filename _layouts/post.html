@@ -1,0 +1,36 @@
+---
+layout: default
+---
+
+<article class="article">
+  <header class="article-header">
+    <p class="post-meta">{{ page.date | date: "%d %B %Y" }}{% if page.source_site %} · Sumber: {{ page.source_site }}{% endif %}</p>
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p>{{ page.description }}</p>{% endif %}
+    {% if page.tags %}
+      <div class="tag-row">
+        {% for tag in page.tags %}
+          <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </header>
+
+  {% assign post_image = page.image | default: '/assets/img/default-news.svg' %}
+  {% if post_image %}
+    <figure class="article-image">
+      <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
+    </figure>
+  {% endif %}
+
+  <div class="article-body">
+    {{ content }}
+  </div>
+
+  {% if page.source_url %}
+    <aside class="source-box">
+      <strong>Sumber rujukan:</strong>
+      <a href="{{ page.source_url }}" rel="nofollow noopener" target="_blank">{{ page.source_title | default: page.source_url }}</a>
+    </aside>
+  {% endif %}
+</article>
