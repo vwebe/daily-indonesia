@@ -1,20 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Daily Indonesia default news image">
-  <defs>
-    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-      <stop stop-color="#111827" offset="0"/>
-      <stop stop-color="#7f1d1d" offset="0.62"/>
-      <stop stop-color="#d71920" offset="1"/>
-    </linearGradient>
-    <radialGradient id="r" cx="0.78" cy="0.18" r="0.6">
-      <stop stop-color="#ff8585" stop-opacity="0.8" offset="0"/>
-      <stop stop-color="#ff8585" stop-opacity="0" offset="1"/>
-    </radialGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#052e16"/><stop offset=".6" stop-color="#166534"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs>
   <rect width="1200" height="675" fill="url(#g)"/>
-  <rect width="1200" height="675" fill="url(#r)"/>
-  <circle cx="1060" cy="90" r="160" fill="#ffffff" opacity="0.08"/>
-  <circle cx="105" cy="575" r="210" fill="#ffffff" opacity="0.06"/>
-  <text x="92" y="285" fill="#fecaca" font-size="32" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="8">BERITA HARIAN INDONESIA</text>
-  <text x="90" y="390" fill="#ffffff" font-size="86" font-family="Arial, Helvetica, sans-serif" font-weight="900" letter-spacing="-4">Daily Indonesia</text>
-  <text x="94" y="455" fill="#f3f4f6" font-size="30" font-family="Arial, Helvetica, sans-serif">Ringkas. Jelas. Mudah dipahami.</text>
+  <circle cx="970" cy="120" r="190" fill="#ffffff" opacity=".12"/>
+  <circle cx="1030" cy="170" r="95" fill="#ffffff" opacity=".14"/>
+  <text x="80" y="285" font-family="Arial, sans-serif" font-size="74" font-weight="800" fill="#fff">Daily Indonesia Bola</text>
+  <text x="84" y="355" font-family="Arial, sans-serif" font-size="32" fill="#dcfce7">Berita sepak bola harian Indonesia dan dunia</text>
+  <rect x="80" y="410" width="320" height="8" rx="4" fill="#bbf7d0"/>
 </svg>
