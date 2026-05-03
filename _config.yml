@@ -4,17 +4,13 @@ url: "https://vwebe.github.io"
 baseurl: "/daily-indonesia"
 lang: "id-ID"
 timezone: "Asia/Jakarta"
-
 permalink: /:year/:month/:day/:title/
 future: false
-
 plugins:
   - jekyll-feed
   - jekyll-sitemap
-
 feed:
   path: feed.xml
-
 defaults:
   - scope:
       path: ""
@@ -23,7 +19,3 @@ defaults:
       layout: post
       author: "Daily Indonesia Bola"
       image: "/assets/img/default-news.svg"
-  - scope:
-      path: ""
-    values:
-      layout: default

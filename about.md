@@ -1,10 +1,10 @@
 ---
 layout: page
 title: Tentang
-permalink: /about/
 description: Tentang Daily Indonesia Bola.
+permalink: /about/
 ---
 
-Daily Indonesia Bola adalah blog berita sepak bola yang menyajikan ringkasan, konteks, dan pembahasan topik harian secara cepat dibaca.
+Daily Indonesia Bola menyajikan artikel sepak bola harian dalam format ringkas, jelas, dan mudah dipahami.
 
-Artikel di blog ini dibuat sebagai tulisan original berbasis topik dan metadata dari sumber publik. Fokus utama blog ini adalah sepak bola Indonesia, tim nasional, liga internasional, transfer, jadwal, hasil, dan isu pertandingan.
+Artikel dibuat sebagai konten original berbasis topik berita publik, dengan fokus pada konteks, dampak, dan poin penting untuk pembaca.

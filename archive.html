@@ -1,17 +1,12 @@
 ---
 layout: page
 title: Arsip
+description: Arsip artikel Daily Indonesia Bola.
 permalink: /archive/
-description: Arsip semua artikel Daily Indonesia Bola.
 ---
 
-<ul class="archive-list">
+<ul class="post-list">
   {% for post in site.posts %}
-    <li>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %B %Y" }}</time>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    </li>
-  {% else %}
-    <li>Belum ada artikel.</li>
+    <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a><span>{{ post.date | date: "%d %b %Y" }}</span></li>
   {% endfor %}
 </ul>

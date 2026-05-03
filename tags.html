@@ -1,14 +1,14 @@
 ---
 layout: page
 title: Tags
-permalink: /tags/
 description: Kumpulan tag artikel Daily Indonesia Bola.
+permalink: /tags/
 ---
 
+{% assign tags = site.tags | sort %}
 <div class="tag-cloud">
-  {% assign tags = site.tags | sort %}
   {% for tag in tags %}
-    <a class="tag tag--large" href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
+    <a class="tag" href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
   {% endfor %}
 </div>
 
@@ -17,10 +17,7 @@ description: Kumpulan tag artikel Daily Indonesia Bola.
     <h2>{{ tag[0] }}</h2>
     <ul class="post-list">
       {% for post in tag[1] %}
-        <li>
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          <span>{{ post.date | date: "%d %b %Y" }}</span>
-        </li>
+        <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a><span>{{ post.date | date: "%d %b %Y" }}</span></li>
       {% endfor %}
     </ul>
   </section>
