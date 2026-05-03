@@ -6,12 +6,6 @@ layout: default
   <header class="article-header">
     <p class="post-meta">{{ page.date | date: "%d %B %Y" }}</p>
     <h1>{{ page.title }}</h1>
-    {% if page.description %}<p>{{ page.description }}</p>{% endif %}
-    {% if page.tags %}
-      <div class="tag-row">
-        {% for tag in page.tags %}<a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}
-      </div>
-    {% endif %}
   </header>
 
   {% assign post_image = page.image | default: '/assets/img/default-news.svg' %}
@@ -22,11 +16,25 @@ layout: default
       {% else %}
         <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
       {% endif %}
-      {% if page.image_caption %}<figcaption>{{ page.image_caption }}</figcaption>{% endif %}
+
+      {% if page.image_caption %}
+        <figcaption>{{ page.image_caption }}</figcaption>
+      {% endif %}
     </figure>
   {% endif %}
 
   <div class="article-body">
     {{ content }}
   </div>
+
+  {% if page.tags %}
+    <footer class="article-tags">
+      <strong>Topik terkait:</strong>
+      <div class="tag-row">
+        {% for tag in page.tags %}
+          <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    </footer>
+  {% endif %}
 </article>
