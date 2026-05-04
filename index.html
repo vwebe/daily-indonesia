@@ -32,15 +32,19 @@ description: Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, 
     </div>
   </article>
 
-  <aside class="latest-panel">
-    <h2>Berita Terbaru</h2>
-    {% for post in site.posts offset:1 limit:5 %}
-      <article class="latest-item">
-        <p class="post-meta">SPORTS NEWS, {{ post.date | date: "%d %B %Y, %H:%M" }} WIB</p>
-        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-      </article>
-    {% endfor %}
-  </aside>
+<aside class="latest-panel">
+  <h2>Berita Terbaru</h2>
+  {% for post in site.posts offset:1 limit:5 %}
+    <article class="latest-item">
+      <p class="latest-time">{{ post.date | date: "%d %b %Y, %H:%M" }} WIB</p>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+
+      {% if post.description %}
+        <p class="latest-excerpt">{{ post.description | strip_html | truncate: 105 }}</p>
+      {% endif %}
+    </article>
+  {% endfor %}
+</aside>
 </section>
 {% endif %}
 
