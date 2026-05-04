@@ -11,6 +11,12 @@ image_clip_bottom_percent: 10
 seo_title: "Inter Milan Tampil Percaya Diri di Serie A – Analisis Laga"
 seo_description: "Analisis mendalam jalannya pertandingan Inter Milan, titik balik taktis, performa tim, dan dampak hasil bagi klasemen Serie A menjelang akhir musim."
 news_type: "Laporan hasil pertandingan"
+home_team: "Inter Milan"
+away_team: "Napoli"
+home_score: 2
+away_score: 1
+league: "Serie A"
+match_status: "FT"
 slug: "inter-milan-tunjukkan-kekuatan-baru-di-laga-penentu-serie-a"
 ---
 <p>Apakah Inter Milan mampu menyalurkan energi baru yang dibawa Cristian Chivu ke dalam performa lapangan dan memperkokoh langkah mereka menuju Scudetto ke‑21?</p>
