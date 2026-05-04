@@ -8,135 +8,175 @@
 
 <script>
 (function() {
-  // ── CONFIG: paste your RapidAPI key here ──
-  const API_KEY = 'YOUR_RAPIDAPI_KEY';
+  // ── CONFIG ──────────────────────────────────────────────────────────────
+  const API_KEY  = 'e4fc359fc0msh0aed3e78686e04fp13487djsnb239057858cd';
+  const API_HOST = 'free-api-live-football-data.p.rapidapi.com';
 
-  // League IDs on api-football.com
-  const LEAGUES = [
-    { id: 39,  name: 'Premier League',  flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-    { id: 140, name: 'La Liga',         flag: '🇪🇸' },
-    { id: 135, name: 'Serie A',         flag: '🇮🇹' },
-    { id: 78,  name: 'Bundesliga',      flag: '🇩🇪' },
-    { id: 61,  name: 'Ligue 1',         flag: '🇫🇷' },
-    { id: 2,   name: 'UCL',             flag: '🏆' },
-    { id: 3,   name: 'UEL',             flag: '🥈' },
-    { id: 253, name: 'Liga Indonesia',  flag: '🇮🇩' },
-  ];
+  // League name → flag mapping (matched against API's leagueName field)
+  const LEAGUE_FLAGS = {
+    'Premier League'   : '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    'La Liga'          : '🇪🇸',
+    'Serie A'          : '🇮🇹',
+    'Bundesliga'       : '🇩🇪',
+    'Ligue 1'          : '🇫🇷',
+    'Champions League' : '🏆',
+    'UEFA Champions League': '🏆',
+    'Europa League'    : '🥈',
+    'UEFA Europa League': '🥈',
+    'Liga 1'           : '🇮🇩',
+    'BRI Liga 1'       : '🇮🇩',
+  };
 
-  const strip = document.getElementById('scoreStrip');
-  const today = new Date().toISOString().slice(0, 10);
-  const CACHE_KEY = `zyn_scores_${today}`;
-  const CACHE_TTL = 5 * 60 * 1000; // 5 min
+  const strip     = document.getElementById('scoreStrip');
+  const CACHE_KEY = `di_scores_${new Date().toISOString().slice(0,10)}`;
+  const CACHE_TTL = 60 * 1000; // 60 s — this API only shows live matches
 
-  function statusLabel(fixture) {
-    const s = fixture.fixture.status;
-    const elapsed = fixture.fixture.status.elapsed;
-    if (s.short === 'FT' || s.short === 'AET' || s.short === 'PEN') return { text: 'FT', live: false };
-    if (s.short === 'HT') return { text: 'HT', live: true };
-    if (['1H','2H','ET','BT','P'].includes(s.short)) return { text: `${elapsed}'`, live: true };
-    if (s.short === 'NS') {
-      const d = new Date(fixture.fixture.date);
-      return { text: d.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit', timeZone:'Asia/Jakarta' }) + ' WIB', live: false };
+  // ── Helpers ─────────────────────────────────────────────────────────────
+
+  function flagFor(leagueName) {
+    if (!leagueName) return '⚽';
+    for (const [key, flag] of Object.entries(LEAGUE_FLAGS)) {
+      if (leagueName.toLowerCase().includes(key.toLowerCase())) return flag;
     }
-    return { text: s.short, live: false };
+    return '⚽';
   }
+
+  function shortName(name) {
+    if (!name) return '???';
+    return name.toUpperCase()
+               .replace(/\bFC\b|\bCLUB\b|\bAC\b|\bSC\b/g, '')
+               .trim()
+               .substring(0, 11);
+  }
+
+  // Normalise a match object from the API into a common shape.
+  // The free-api-live-football-data API returns objects like:
+  //   { matchId, homeTeam:{name}, awayTeam:{name},
+  //     homeScore, awayScore, matchStatus, matchMinute,
+  //     leagueName, … }
+  function normalise(m) {
+    const home    = shortName(m.homeTeam?.name || m.home_team || m.homeName || '');
+    const away    = shortName(m.awayTeam?.name || m.away_team || m.awayName || '');
+    const hg      = m.homeScore ?? m.home_score ?? m.homeGoals ?? '-';
+    const ag      = m.awayScore ?? m.away_score ?? m.awayGoals ?? '-';
+    const status  = (m.matchStatus || m.status || '').toUpperCase();
+    const minute  = m.matchMinute || m.elapsed || '';
+    const league  = m.leagueName  || m.league?.name || m.competition || '';
+
+    let statusText, isLive;
+    if (['FT','FINISHED','AET','PEN','FULL TIME'].some(s => status.includes(s))) {
+      statusText = 'FT'; isLive = false;
+    } else if (status === 'HT' || status === 'HALF TIME') {
+      statusText = 'HT'; isLive = true;
+    } else if (status === 'LIVE' || status === 'IN PLAY' || status === 'INPLAY' || minute) {
+      statusText = minute ? `${minute}'` : 'LIVE'; isLive = true;
+    } else {
+      // Scheduled — try to show kick-off time
+      const d = m.matchTime || m.kickoff || m.date || '';
+      if (d) {
+        try {
+          statusText = new Date(d).toLocaleTimeString('id-ID', {
+            hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta'
+          }) + ' WIB';
+        } catch { statusText = status || '–'; }
+      } else {
+        statusText = status || '–';
+      }
+      isLive = false;
+    }
+
+    return { home, away, hg, ag, statusText, isLive, league };
+  }
+
+  // ── Render ───────────────────────────────────────────────────────────────
 
   function renderCards(matches) {
     if (!matches.length) {
-      strip.innerHTML = `<div class="score-empty">Tidak ada pertandingan hari ini</div>`;
+      strip.innerHTML = `<div class="score-empty">⚽ Tidak ada pertandingan live saat ini</div>`;
       return;
     }
-    strip.innerHTML = matches.map(m => {
-      const st = statusLabel(m);
-      const home = m.teams.home.name.toUpperCase().replace(/\s+FC$/,'').substring(0,10);
-      const away = m.teams.away.name.toUpperCase().replace(/\s+FC$/,'').substring(0,10);
-      const hg = m.goals.home ?? '-';
-      const ag = m.goals.away ?? '-';
-      const leagueInfo = LEAGUES.find(l => l.id === m.league.id);
-      const flag = leagueInfo ? leagueInfo.flag : '⚽';
-      const leagueName = (leagueInfo ? leagueInfo.name : m.league.name).toUpperCase();
+    strip.innerHTML = matches.map(raw => {
+      const m = normalise(raw);
+      const flag = flagFor(m.league);
+      const leagueLabel = m.league ? m.league.toUpperCase().substring(0, 20) : 'FOOTBALL';
       return `
-        <div class="score-card ${st.live ? 'score-card--live' : ''}">
-          <div class="sc-league">${flag} ${leagueName}</div>
+        <div class="score-card ${m.isLive ? 'score-card--live' : ''}">
+          <div class="sc-league">${flag} ${leagueLabel}</div>
           <div class="sc-match">
-            <span class="sc-team">${home}</span>
-            <span class="sc-score ${st.live ? 'sc-score--live' : ''}">${hg}–${ag}</span>
-            <span class="sc-team">${away}</span>
-            <span class="sc-status ${st.live ? 'sc-status--live' : ''}">${st.text}</span>
+            <span class="sc-team">${m.home}</span>
+            <span class="sc-score ${m.isLive ? 'sc-score--live' : ''}">${m.hg}–${m.ag}</span>
+            <span class="sc-team">${m.away}</span>
+            <span class="sc-status ${m.isLive ? 'sc-status--live' : ''}">${m.statusText}</span>
           </div>
         </div>`;
     }).join('');
 
-    // trigger entrance animation
     document.querySelectorAll('.score-card').forEach((el, i) => {
       el.style.animationDelay = `${i * 70}ms`;
       el.classList.add('score-enter');
     });
   }
 
-  async function fetchLeague(leagueId, season) {
-    const url = `https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${leagueId}&date=${today}&season=${season}`;
+  // ── Fetch ────────────────────────────────────────────────────────────────
+
+  async function fetchLiveScores() {
+    // Primary endpoint: all live match scores
+    const url = `https://${API_HOST}/football-get-all-live-matches-scores`;
     const res = await fetch(url, {
       headers: {
-        'X-RapidAPI-Key': API_KEY,
-        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+        'x-rapidapi-key'  : API_KEY,
+        'x-rapidapi-host' : API_HOST
       }
     });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    return data.response || [];
+
+    // API may wrap in response[], data[], matches[], or return an array directly
+    return data.response
+        || data.data
+        || data.matches
+        || data.liveMatches
+        || (Array.isArray(data) ? data : []);
   }
 
-  async function loadScores() {
-    if (API_KEY === 'YOUR_RAPIDAPI_KEY') {
-      strip.innerHTML = `<div class="score-empty">⚙️ Tambahkan API key di <code>_includes/scores.html</code></div>`;
-      return;
-    }
+  // ── Main ─────────────────────────────────────────────────────────────────
 
-    // Check cache
+  async function loadScores() {
+    // Check session cache
     try {
       const cached = sessionStorage.getItem(CACHE_KEY);
       if (cached) {
-        const { data, ts } = JSON.parse(cached);
-        if (Date.now() - ts < CACHE_TTL) { renderCards(data); return; }
+        const { payload, ts } = JSON.parse(cached);
+        if (Date.now() - ts < CACHE_TTL) { renderCards(payload); return; }
       }
     } catch(e) {}
 
     try {
-      const season = new Date().getFullYear();
-      const results = await Promise.allSettled(
-        LEAGUES.map(l => fetchLeague(l.id, season))
-      );
+      const matches = await fetchLiveScores();
 
-      let all = [];
-      results.forEach(r => {
-        if (r.status === 'fulfilled') all = all.concat(r.value);
+      // Sort: live first, then finished
+      matches.sort((a, b) => {
+        const al = (a.matchStatus||'').toLowerCase().includes('live') ? 0 : 1;
+        const bl = (b.matchStatus||'').toLowerCase().includes('live') ? 0 : 1;
+        return al - bl;
       });
 
-      // Sort: live first, then by league order, then NS
-      const order = { '1H':0,'2H':1,'ET':2,'HT':3,'BT':4,'P':5,'FT':6,'AET':7,'PEN':8,'NS':9 };
-      all.sort((a, b) => {
-        const ao = order[a.fixture.status.short] ?? 10;
-        const bo = order[b.fixture.status.short] ?? 10;
-        return ao - bo;
-      });
-
-      // Cache it
       try {
-        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: all, ts: Date.now() }));
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ payload: matches, ts: Date.now() }));
       } catch(e) {}
 
-      renderCards(all);
+      renderCards(matches);
     } catch(err) {
       strip.innerHTML = `<div class="score-empty">Gagal memuat skor — coba refresh</div>`;
-      console.error('Scores fetch error:', err);
+      console.error('[scores] fetch error:', err);
     }
   }
 
   loadScores();
-  // Auto-refresh every 60s if there are live matches
+
+  // Auto-refresh every 60 s when there are live matches on screen
   setInterval(() => {
-    const hasLive = document.querySelector('.score-card--live');
-    if (hasLive) loadScores();
+    if (document.querySelector('.score-card--live')) loadScores();
   }, 60000);
 })();
 </script>
