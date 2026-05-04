@@ -40,3 +40,120 @@
 .site-header {
   min-height: 72px;
 }
+.news-ticker {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  margin: 1rem 0 1.5rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: 0.9rem;
+  background: #fff;
+  box-shadow: var(--shadow);
+  color: var(--muted);
+}
+
+.news-ticker strong {
+  color: var(--accent-dark);
+  white-space: nowrap;
+}
+
+.news-lead {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(300px, 0.9fr);
+  gap: 1.2rem;
+  align-items: stretch;
+  margin: 1rem 0 2rem;
+}
+
+.lead-card,
+.latest-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1.4rem;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.lead-image {
+  display: block;
+  aspect-ratio: 16 / 8;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.lead-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  clip-path: inset(0 0 10% 0);
+  transform: scaleY(1.111111);
+  transform-origin: top center;
+}
+
+.lead-body {
+  padding: 1.3rem 1.4rem 1.5rem;
+}
+
+.lead-body h1 {
+  margin: 0.35rem 0 0.7rem;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.lead-body p {
+  color: var(--muted);
+  margin: 0.4rem 0 0;
+}
+
+.latest-panel {
+  padding: 1.2rem;
+}
+
+.latest-panel h2 {
+  margin: 0 0 0.8rem;
+  font-size: 1.25rem;
+}
+
+.latest-item {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.latest-item:first-of-type {
+  border-top: 0;
+}
+
+.latest-item h3 {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.compact-grid .post-card h2 {
+  font-size: 1rem;
+}
+
+.compact-grid .post-card__body {
+  padding: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .news-lead {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .news-ticker {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .lead-image {
+    aspect-ratio: 16 / 10;
+  }
+}
