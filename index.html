@@ -1,13 +1,53 @@
 ---
 layout: default
 title: Home
-description: Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, jadwal, hasil, transfer, klasemen, dan konteks pertandingan.
+description: Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, dan analisis mendalam dari lapangan ke layar kamu.
 ---
 
+<!-- Breaking ticker -->
 <section class="news-ticker">
-  <strong>Update Terbaru</strong>
-  <span>Berita olahraga pilihan hari ini dari sepak bola, bulu tangkis, transfer, jadwal, hasil pertandingan, dan kabar atlet Indonesia.</span>
+  <strong>⚡ BREAKING</strong>
+  <span>Berita sepak bola pilihan hari ini: hasil pertandingan, transfer terbaru, klasemen liga, dan kabar timnas Indonesia.</span>
 </section>
+
+<!-- Live scores strip -->
+<div class="score-strip">
+  <div class="score-card">
+    <div>
+      <div class="league">Premier League</div>
+      <div class="teams"><span>MAN UTD</span><span class="score">2 – 1</span><span>CHELSEA</span></div>
+    </div>
+    <span class="status">FT</span>
+  </div>
+  <div class="score-card">
+    <div>
+      <div class="league">Serie A</div>
+      <div class="teams"><span>INTER</span><span class="score">3 – 0</span><span>MILAN</span></div>
+    </div>
+    <span class="status">FT</span>
+  </div>
+  <div class="score-card">
+    <div>
+      <div class="league">La Liga</div>
+      <div class="teams"><span>BARCA</span><span class="score">1 – 1</span><span>ATLETICO</span></div>
+    </div>
+    <span class="status">FT</span>
+  </div>
+  <div class="score-card">
+    <div>
+      <div class="league">Liga 2 Indonesia</div>
+      <div class="teams"><span>PSS</span><span class="score">2 – 0</span><span>PERSIPURA</span></div>
+    </div>
+    <span class="status">FT</span>
+  </div>
+  <div class="score-card">
+    <div>
+      <div class="league">Bundesliga</div>
+      <div class="teams"><span>DORTMUND</span><span class="score">2 – 2</span><span>LEVERKUSEN</span></div>
+    </div>
+    <span class="status">FT</span>
+  </div>
+</div>
 
 {% assign featured = site.posts | first %}
 
@@ -24,33 +64,40 @@ description: Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, 
     </a>
 
     <div class="lead-body">
-      <p class="post-meta">SPORTS NEWS, {{ featured.date | date: "%d %B %Y, %H:%M" }} WIB</p>
+      <p class="post-meta">🔥 HEADLINE · {{ featured.date | date: "%d %B %Y" }}</p>
       <h1><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h1>
       {% if featured.description %}
-        <p>{{ featured.description | strip_html | truncate: 180 }}</p>
+        <p>{{ featured.description | strip_html | truncate: 200 }}</p>
+      {% endif %}
+      {% if featured.tags %}
+      <div class="tag-row" style="margin-top:auto; padding-top:1rem;">
+        {% for tag in featured.tags limit:3 %}
+          <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
+        {% endfor %}
+      </div>
       {% endif %}
     </div>
   </article>
 
-<aside class="latest-panel">
-  <h2>Berita Terbaru</h2>
-  {% for post in site.posts offset:1 limit:5 %}
-    <article class="latest-item">
-      <p class="latest-time">{{ post.date | date: "%d %b %Y, %H:%M" }} WIB</p>
-      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-
-      {% if post.description %}
-        <p class="latest-excerpt">{{ post.description | strip_html | truncate: 105 }}</p>
-      {% endif %}
-    </article>
-  {% endfor %}
-</aside>
+  <aside class="latest-panel">
+    <h2>⚡ Terbaru</h2>
+    {% for post in site.posts offset:1 limit:5 %}
+      <article class="latest-item">
+        <p class="latest-time">{{ post.date | date: "%d %b %Y" }}</p>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        {% if post.description %}
+          <p class="latest-excerpt">{{ post.description | strip_html | truncate: 95 }}</p>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </aside>
 </section>
 {% endif %}
 
-<section class="section-header">
-  <h2>Artikel Lainnya</h2>
-</section>
+<div class="section-header">
+  <h2>Semua Artikel</h2>
+  <p>Berita bola terkini setiap hari</p>
+</div>
 
 <section class="post-grid compact-grid">
   {% for post in site.posts offset:6 limit:12 %}
@@ -65,7 +112,7 @@ description: Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, 
       </a>
 
       <div class="post-card__body">
-        <p class="post-meta">SPORTS NEWS, {{ post.date | date: "%d %B %Y, %H:%M" }} WIB</p>
+        <p class="post-meta">{{ post.date | date: "%d %B %Y" }}</p>
         <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
 
         {% if post.tags %}
@@ -80,7 +127,7 @@ description: Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, 
   {% else %}
     <div class="empty-state">
       <h2>Belum ada artikel lainnya</h2>
-      <p>Artikel tambahan akan muncul setelah post baru diterbitkan.</p>
+      <p>Nantikan berita bola terbaru berikutnya.</p>
     </div>
   {% endfor %}
 </section>
