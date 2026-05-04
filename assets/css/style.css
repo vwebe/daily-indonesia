@@ -20,3 +20,23 @@
 .brand-mark {
   display: none;
 }
+.brand-logo {
+  width: 44px !important;
+  height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  object-fit: contain !important;
+  border-radius: 10px;
+  display: block;
+  flex: 0 0 44px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.site-header {
+  min-height: 72px;
+}
