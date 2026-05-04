@@ -1,39 +1,39 @@
 <!-- Scores Strip — pulled from post front matter (no API needed) -->
-{% assign score_posts = site.posts
-  | where_exp: "p", "p.news_type == 'hasil' and p.home_team and p.away_team and p.home_score != nil and p.away_score != nil"
-  | limit: 10 %}
+{% assign shown_scores = 0 %}
 
-{% if score_posts.size > 0 %}
 <div class="score-strip" id="scoreStrip">
-  {% for post in score_posts %}
-    {% assign status = post.match_status | default: "FT" | upcase %}
-    {% assign is_live = false %}
-    {% if status == "LIVE" or status == "HT" or status contains "'" %}
-      {% assign is_live = true %}
-    {% endif %}
+  {% for post in site.posts limit: 30 %}
+    {% if shown_scores < 10 and post.home_team and post.away_team and post.home_score != nil and post.away_score != nil %}
+      {% assign status = post.match_status | default: "FT" | upcase %}
+      {% assign is_live = false %}
+      {% if status == "LIVE" or status == "HT" or status contains "'" %}
+        {% assign is_live = true %}
+      {% endif %}
 
-    {% assign league = post.league | default: "Football" | upcase %}
-    {% assign flag = "⚽" %}
-    {% if league contains "PREMIER" %}{% assign flag = "🏴󠁧󠁢󠁥󠁮󠁧󠁿" %}
-    {% elsif league contains "LA LIGA" or league contains "LALIGA" %}{% assign flag = "🇪🇸" %}
-    {% elsif league contains "SERIE A" %}{% assign flag = "🇮🇹" %}
-    {% elsif league contains "BUNDESLIGA" %}{% assign flag = "🇩🇪" %}
-    {% elsif league contains "LIGUE" %}{% assign flag = "🇫🇷" %}
-    {% elsif league contains "CHAMPIONS" or league contains "UCL" %}{% assign flag = "🏆" %}
-    {% elsif league contains "EUROPA" or league contains "UEL" %}{% assign flag = "🥈" %}
-    {% elsif league contains "LIGA 1" or league contains "INDONESIA" or league contains "BRI" %}{% assign flag = "🇮🇩" %}
-    {% elsif league contains "LIGA 2" %}{% assign flag = "🇮🇩" %}
-    {% endif %}
+      {% assign league = post.league | default: "Football" | upcase %}
+      {% assign flag = "⚽" %}
+      {% if league contains "PREMIER" %}{% assign flag = "🏴" %}
+      {% elsif league contains "LA LIGA" or league contains "LALIGA" %}{% assign flag = "🇪🇸" %}
+      {% elsif league contains "SERIE A" %}{% assign flag = "🇮🇹" %}
+      {% elsif league contains "BUNDESLIGA" %}{% assign flag = "🇩🇪" %}
+      {% elsif league contains "LIGUE" %}{% assign flag = "🇫🇷" %}
+      {% elsif league contains "CHAMPIONS" or league contains "UCL" %}{% assign flag = "🏆" %}
+      {% elsif league contains "EUROPA" or league contains "UEL" %}{% assign flag = "🥈" %}
+      {% elsif league contains "LIGA 1" or league contains "INDONESIA" or league contains "BRI" %}{% assign flag = "🇮🇩" %}
+      {% elsif league contains "LIGA 2" %}{% assign flag = "🇮🇩" %}
+      {% endif %}
 
-    <a class="score-card {% if is_live %}score-card--live{% endif %}" href="{{ post.url | relative_url }}" style="text-decoration:none;">
-      <div class="sc-league">{{ flag }} {{ league | truncate: 20, "" }}</div>
-      <div class="sc-match">
-        <span class="sc-team">{{ post.home_team | upcase | truncate: 11, "" }}</span>
-        <span class="sc-score {% if is_live %}sc-score--live{% endif %}">{{ post.home_score }}–{{ post.away_score }}</span>
-        <span class="sc-team">{{ post.away_team | upcase | truncate: 11, "" }}</span>
-        <span class="sc-status {% if is_live %}sc-status--live{% endif %}">{{ post.match_status | default: "FT" }}</span>
-      </div>
-    </a>
+      <a class="score-card {% if is_live %}score-card--live{% endif %}" href="{{ post.url | relative_url }}" style="text-decoration:none;">
+        <div class="sc-league">{{ flag }} {{ league | truncate: 20, "" }}</div>
+        <div class="sc-match">
+          <span class="sc-team">{{ post.home_team | upcase | truncate: 11, "" }}</span>
+          <span class="sc-score {% if is_live %}sc-score--live{% endif %}">{{ post.home_score }}–{{ post.away_score }}</span>
+          <span class="sc-team">{{ post.away_team | upcase | truncate: 11, "" }}</span>
+          <span class="sc-status {% if is_live %}sc-status--live{% endif %}">{{ post.match_status | default: "FT" }}</span>
+        </div>
+      </a>
+
+      {% assign shown_scores = shown_scores | plus: 1 %}
+    {% endif %}
   {% endfor %}
 </div>
-{% endif %}
