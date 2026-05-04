@@ -37,11 +37,11 @@
       {% endif %}
 
       <a class="score-card {% if is_live %}score-card--live{% endif %}" href="{{ post.url | relative_url }}" style="text-decoration:none;">
-        <div class="sc-league">{{ flag }} {{ league | truncate: 20, "" }}</div>
+        <div class="sc-league">{{ flag }} {{ league }}</div>
         <div class="sc-match">
-          <span class="sc-team">{{ home_team_raw | upcase | truncate: 11, "" }}</span>
+          <span class="sc-team" title="{{ home_team_raw | escape }}">{{ home_team_raw | upcase }}</span>
           <span class="sc-score {% if is_live %}sc-score--live{% endif %}">{{ post.home_score }}–{{ post.away_score }}</span>
-          <span class="sc-team">{{ away_team_raw | upcase | truncate: 11, "" }}</span>
+          <span class="sc-team" title="{{ away_team_raw | escape }}">{{ away_team_raw | upcase }}</span>
           <span class="sc-status {% if is_live %}sc-status--live{% endif %}">{{ post.match_status | default: "FT" }}</span>
         </div>
       </a>
