@@ -963,3 +963,207 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
   .footer-links { grid-template-columns: 1fr; }
   .header-live { display: none; }
 }
+
+/* ═══════════════════════════════════════
+   ANIMATIONS & EFFECTS
+═══════════════════════════════════════ */
+
+/* ── Page load: body fade in ── */
+body {
+  animation: bodyFade .4s ease both;
+}
+@keyframes bodyFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Header entrance ── */
+.site-header {
+  animation: slideDown .5s cubic-bezier(.22,1,.36,1) both;
+  transition: padding .3s ease, background .3s ease, box-shadow .3s ease;
+}
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.site-header.scrolled {
+  box-shadow: 0 4px 30px rgba(0,0,0,.6);
+  background: rgba(10,12,17,.98);
+}
+
+/* ── Ticker scrolling marquee ── */
+.news-ticker {
+  overflow: hidden;
+}
+.ticker-inner {
+  display: inline-block;
+  animation: marquee 28s linear infinite;
+  white-space: nowrap;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+.news-ticker:hover .ticker-inner {
+  animation-play-state: paused;
+}
+
+/* ── Score cards entrance ── */
+.score-enter {
+  animation: scoreIn .5s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes scoreIn {
+  from { opacity: 0; transform: translateY(16px) scale(.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+.score-card {
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.score-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(232,255,0,.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+
+/* ── Score pill flash ── */
+.sk {
+  transition: background .3s ease, transform .3s ease;
+  animation: skPop .4s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: inherit;
+}
+@keyframes skPop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .55s cubic-bezier(.22,1,.36,1),
+              transform .55s cubic-bezier(.22,1,.36,1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Card 3D tilt ── */
+.post-card, .lead-card {
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ── Live dot pulse ring ── */
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  animation: ring 1.8s ease-out infinite;
+}
+.header-live { position: relative; }
+.live-dot { position: relative; }
+@keyframes ring {
+  0%   { transform: scale(1);   opacity: .8; }
+  100% { transform: scale(2.2); opacity: 0;  }
+}
+
+/* ── Nav link hover underline ── */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 4px; left: 50%;
+  width: 0; height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width .2s ease, left .2s ease;
+}
+.nav-link:hover::after,
+.nav-link.nav-active::after {
+  width: calc(100% - 1.7rem);
+  left: .85rem;
+}
+.nav-link.nav-active { color: var(--accent); }
+
+/* ── Cat pill hover slide ── */
+.cat-pill {
+  transition: all .18s cubic-bezier(.22,1,.36,1);
+}
+.cat-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(232,255,0,.15);
+}
+
+/* ── Tag hover ── */
+.tag {
+  transition: all .15s ease;
+}
+.tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(232,255,0,.1);
+}
+
+/* ── Section header line grow ── */
+.section-header {
+  animation: fadeUp .6s cubic-bezier(.22,1,.36,1) both;
+  animation-delay: .2s;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Ticker badge pulse ── */
+.news-ticker strong {
+  animation: badgePulse 3s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232,255,0,.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(232,255,0,0); }
+}
+
+/* ── Post card image zoom on hover ── */
+.post-card__image img,
+.lead-image img {
+  transition: transform .5s cubic-bezier(.22,1,.36,1);
+}
+.post-card:hover .post-card__image img { transform: scale(1.06); }
+
+/* ── More news links ── */
+.more-news-list a {
+  transition: all .18s cubic-bezier(.22,1,.36,1);
+}
+.more-news-list a:hover {
+  transform: translateX(6px);
+  border-color: rgba(232,255,0,.3);
+  background: var(--bg3);
+  color: var(--text);
+}
+
+/* ── Footer links ── */
+.footer-col a {
+  position: relative;
+  transition: color .15s ease, padding-left .2s ease;
+}
+.footer-col a:hover {
+  padding-left: .5rem;
+}
+
+/* ── Brand icon spin on hover ── */
+.brand:hover .brand-icon {
+  display: inline-block;
+  animation: spinBall .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes spinBall {
+  from { transform: rotate(-20deg) scale(.8); }
+  to   { transform: rotate(0deg)   scale(1); }
+}
