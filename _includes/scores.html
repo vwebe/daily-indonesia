@@ -1,5 +1,7 @@
 <!-- Scores Strip — pulled from post front matter (no API needed) -->
-{% assign score_posts = site.posts | where_exp: "p", "p.home_team and p.away_team" | limit: 10 %}
+{% assign score_posts = site.posts
+  | where_exp: "p", "p.news_type == 'hasil' and p.home_team and p.away_team and p.home_score != nil and p.away_score != nil"
+  | limit: 10 %}
 
 {% if score_posts.size > 0 %}
 <div class="score-strip" id="scoreStrip">
