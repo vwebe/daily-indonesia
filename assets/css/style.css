@@ -613,19 +613,22 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
 .article-image img {
   display: block;
   width: 100%;
-  /* clip bottom 12%: make img 112% tall inside overflow:hidden container */
-  height: auto;
+  height: 112%;
   max-height: none;
-  transform: translateY(0);
-  clip-path: inset(0 0 12% 0);
+  object-fit: cover;
+  object-position: top center;
 }
 
 .article-image figcaption {
-  padding: .7rem 1rem;
-  color: var(--text3);
-  font-size: .84rem;
-  background: var(--bg3);
-  border-top: 1px solid var(--line);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: .65rem 1rem;
+  color: rgba(255,255,255,.85);
+  font-size: .82rem;
+  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.0) 100%);
+  backdrop-filter: blur(2px);
 }
 
 /* Article body typography */
