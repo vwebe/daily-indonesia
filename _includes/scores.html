@@ -1,9 +1,22 @@
 <!-- Scores Strip — pulled only from verified score front matter generated from source text -->
-<div class="score-strip" id="scoreStrip">
-  {% assign shown_scores = 0 %}
+{% assign shown_scores = 0 %}
+{% capture score_cards %}
+  {% for post in site.posts limit: 80 %}
+    {% assign home_team_raw = post.home_team | default: "" | strip %}
+    {% assign away_team_raw = post.away_team | default: "" | strip %}
+    {% assign home_team_check = home_team_raw | remove: "0" | remove: "1" | remove: "2" | remove: "3" | remove: "4" | remove: "5" | remove: "6" | remove: "7" | remove: "8" | remove: "9" | remove: "-" | remove: "–" | remove: " " | strip %}
+    {% assign away_team_check = away_team_raw | remove: "0" | remove: "1" | remove: "2" | remove: "3" | remove: "4" | remove: "5" | remove: "6" | remove: "7" | remove: "8" | remove: "9" | remove: "-" | remove: "–" | remove: " " | strip %}
+    {% assign home_score_text = post.home_score | append: "" | strip %}
+    {% assign away_score_text = post.away_score | append: "" | strip %}
 
-  {% for post in site.posts limit: 60 %}
-    {% if shown_scores < 10 and post.score_verified == true and post.home_team and post.away_team and post.home_score != nil and post.away_score != nil %}
+    {% assign valid_score_post = false %}
+    {% if post.score_verified == true and home_team_raw != "" and away_team_raw != "" and home_team_check != "" and away_team_check != "" and post.home_score != nil and post.away_score != nil %}
+      {% unless home_team_raw == home_score_text or home_team_raw == away_score_text or away_team_raw == home_score_text or away_team_raw == away_score_text or home_team_raw contains "-" and home_team_check == "" or away_team_raw contains "-" and away_team_check == "" %}
+        {% assign valid_score_post = true %}
+      {% endunless %}
+    {% endif %}
+
+    {% if shown_scores < 10 and valid_score_post %}
       {% assign status = post.match_status | default: "FT" | upcase %}
       {% assign is_live = false %}
       {% if status == "LIVE" or status == "HT" or status contains "'" %}
@@ -26,9 +39,9 @@
       <a class="score-card {% if is_live %}score-card--live{% endif %}" href="{{ post.url | relative_url }}" style="text-decoration:none;">
         <div class="sc-league">{{ flag }} {{ league | truncate: 20, "" }}</div>
         <div class="sc-match">
-          <span class="sc-team">{{ post.home_team | upcase | truncate: 11, "" }}</span>
+          <span class="sc-team">{{ home_team_raw | upcase | truncate: 11, "" }}</span>
           <span class="sc-score {% if is_live %}sc-score--live{% endif %}">{{ post.home_score }}–{{ post.away_score }}</span>
-          <span class="sc-team">{{ post.away_team | upcase | truncate: 11, "" }}</span>
+          <span class="sc-team">{{ away_team_raw | upcase | truncate: 11, "" }}</span>
           <span class="sc-status {% if is_live %}sc-status--live{% endif %}">{{ post.match_status | default: "FT" }}</span>
         </div>
       </a>
@@ -36,4 +49,10 @@
       {% assign shown_scores = shown_scores | plus: 1 %}
     {% endif %}
   {% endfor %}
+{% endcapture %}
+
+{% if shown_scores > 0 %}
+<div class="score-strip" id="scoreStrip">
+  {{ score_cards | strip }}
 </div>
+{% endif %}
