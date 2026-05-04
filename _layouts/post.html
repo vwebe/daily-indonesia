@@ -4,8 +4,12 @@ layout: default
 
 <article class="article">
   <header class="article-header">
-    <p class="post-meta">{{ page.date | date: "%d %B %Y" }}</p>
+    <p class="post-meta">SPORTS NEWS · {{ page.date | date: "%d %B %Y" }}</p>
     <h1>{{ page.title }}</h1>
+
+    {% if page.description and page.description != "Ringkasan topik bola terbaru yang diterbitkan otomatis." %}
+      <p class="article-desc">{{ page.description }}</p>
+    {% endif %}
   </header>
 
   {% assign post_image = page.image | default: '/assets/img/default-news.svg' %}
@@ -26,19 +30,6 @@ layout: default
   <div class="article-body">
     {{ content }}
   </div>
- 
-  <div style="display:none;visibility:hidden;width:0;height:0;overflow:hidden;" aria-hidden="true">
-    <!-- 2026-->
-
-    <a href="https://biar-apa-biarin.pages.dev/">Redmitoto</a> 
-<a href="https://terbang-sesaat.pages.dev/">Dauntogel</a>
-<a href="https://pangeran-belum-mandi.pages.dev/">Ortugaming</a> 
-<a href="https://masih-teringat-senyum-manismu.pages.dev/">Admintoto</a> 
-<a href="https://jangan-beri-aku-harapan.pages.dev/">Gadungaming</a> 
-<a href="https://cinderella-bau-ikan.pages.dev/">Daunpoker</a> 
-<a href="https://dedaunan-kering.pages.dev/">Doyanpoker</a> 
-<a href="https://balikan-lagi-yeee.pages.dev/">Jasminplay</a> 
-</div>
 
   {% if page.tags %}
     <footer class="article-tags">
@@ -50,4 +41,15 @@ layout: default
       </div>
     </footer>
   {% endif %}
+
+  <section class="more-news">
+    <h2>Berita Lainnya</h2>
+    <div class="more-news-list">
+      {% for post in site.posts limit:5 %}
+        {% if post.url != page.url %}
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
 </article>
