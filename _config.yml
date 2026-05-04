@@ -1,21 +1,25 @@
-title: "Daily Indonesia Bola"
-description: "Berita sepak bola harian Indonesia dan dunia dengan ringkasan jelas, jadwal, hasil, transfer, klasemen, dan konteks pertandingan."
-url: "https://vwebe.github.io"
-baseurl: "/daily-indonesia"
+title: "Daily Sports Indonesia"
+description: "Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, jadwal, hasil, transfer, klasemen, dan konteks pertandingan."
+url: "https://sports.zynelion.com"
+baseurl: ""
 lang: "id-ID"
 timezone: "Asia/Jakarta"
+
 permalink: /:year/:month/:day/:title/
 future: false
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+
 feed:
   path: feed.xml
+
 defaults:
   - scope:
       path: ""
       type: "posts"
     values:
       layout: post
-      author: "Daily Indonesia Bola"
+      author: "Daily Sports Indonesia"
       image: "/assets/img/default-news.svg"
