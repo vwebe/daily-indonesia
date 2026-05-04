@@ -12,171 +12,184 @@
   const API_KEY  = 'e4fc359fc0msh0aed3e78686e04fp13487djsnb239057858cd';
   const API_HOST = 'free-api-live-football-data.p.rapidapi.com';
 
-  // League name → flag mapping (matched against API's leagueName field)
+  // 3-hour refresh cycle — but ALWAYS keep last successful data visible
+  const CACHE_KEY    = 'di_scores_data';
+  const CACHE_TS_KEY = 'di_scores_ts';
+  const CACHE_TTL    = 3 * 60 * 60 * 1000; // 3 hours in ms
+
   const LEAGUE_FLAGS = {
-    'Premier League'   : '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-    'La Liga'          : '🇪🇸',
-    'Serie A'          : '🇮🇹',
-    'Bundesliga'       : '🇩🇪',
-    'Ligue 1'          : '🇫🇷',
-    'Champions League' : '🏆',
+    'Premier League'       : '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    'La Liga'              : '🇪🇸',
+    'Serie A'              : '🇮🇹',
+    'Bundesliga'           : '🇩🇪',
+    'Ligue 1'              : '🇫🇷',
+    'Champions League'     : '🏆',
     'UEFA Champions League': '🏆',
-    'Europa League'    : '🥈',
-    'UEFA Europa League': '🥈',
-    'Liga 1'           : '🇮🇩',
-    'BRI Liga 1'       : '🇮🇩',
+    'Europa League'        : '🥈',
+    'UEFA Europa League'   : '🥈',
+    'Liga 1'               : '🇮🇩',
+    'BRI Liga 1'           : '🇮🇩',
   };
 
-  const strip     = document.getElementById('scoreStrip');
-  const CACHE_KEY = `di_scores_${new Date().toISOString().slice(0,10)}`;
-  const CACHE_TTL = 60 * 1000; // 60 s — this API only shows live matches
+  const strip = document.getElementById('scoreStrip');
 
-  // ── Helpers ─────────────────────────────────────────────────────────────
+  // ── localStorage cache (survives page reload) ────────────────────────────
+  function saveCache(matches) {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(matches));
+      localStorage.setItem(CACHE_TS_KEY, String(Date.now()));
+    } catch(e) {}
+  }
 
-  function flagFor(leagueName) {
-    if (!leagueName) return '⚽';
-    for (const [key, flag] of Object.entries(LEAGUE_FLAGS)) {
-      if (leagueName.toLowerCase().includes(key.toLowerCase())) return flag;
+  function loadCache() {
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      const ts  = parseInt(localStorage.getItem(CACHE_TS_KEY) || '0', 10);
+      if (!raw) return { matches: null, stale: true, ts: 0 };
+      return { matches: JSON.parse(raw), stale: (Date.now() - ts) > CACHE_TTL, ts };
+    } catch(e) {
+      return { matches: null, stale: true, ts: 0 };
+    }
+  }
+
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  function flagFor(name) {
+    if (!name) return '⚽';
+    for (const [k, f] of Object.entries(LEAGUE_FLAGS)) {
+      if (name.toLowerCase().includes(k.toLowerCase())) return f;
     }
     return '⚽';
   }
 
   function shortName(name) {
     if (!name) return '???';
-    return name.toUpperCase()
-               .replace(/\bFC\b|\bCLUB\b|\bAC\b|\bSC\b/g, '')
-               .trim()
-               .substring(0, 11);
+    return name.toUpperCase().replace(/\bFC\b|\bCLUB\b|\bAC\b|\bSC\b/g,'').trim().substring(0,11);
   }
 
-  // Normalise a match object from the API into a common shape.
-  // The free-api-live-football-data API returns objects like:
-  //   { matchId, homeTeam:{name}, awayTeam:{name},
-  //     homeScore, awayScore, matchStatus, matchMinute,
-  //     leagueName, … }
   function normalise(m) {
-    const home    = shortName(m.homeTeam?.name || m.home_team || m.homeName || '');
-    const away    = shortName(m.awayTeam?.name || m.away_team || m.awayName || '');
-    const hg      = m.homeScore ?? m.home_score ?? m.homeGoals ?? '-';
-    const ag      = m.awayScore ?? m.away_score ?? m.awayGoals ?? '-';
-    const status  = (m.matchStatus || m.status || '').toUpperCase();
-    const minute  = m.matchMinute || m.elapsed || '';
-    const league  = m.leagueName  || m.league?.name || m.competition || '';
+    const home   = shortName(m.homeTeam?.name || m.home_team || m.homeName || m.home || '');
+    const away   = shortName(m.awayTeam?.name || m.away_team || m.awayName || m.away || '');
+    const hg     = m.homeScore ?? m.home_score ?? m.homeGoals ?? m.score?.home ?? '-';
+    const ag     = m.awayScore ?? m.away_score ?? m.awayGoals ?? m.score?.away ?? '-';
+    const status = (m.matchStatus || m.status || m.state || '').toUpperCase();
+    const minute = m.matchMinute || m.elapsed || m.minute || '';
+    const league = m.leagueName  || m.league?.name || m.competition?.name || m.competition || '';
 
     let statusText, isLive;
-    if (['FT','FINISHED','AET','PEN','FULL TIME'].some(s => status.includes(s))) {
+    if (['FT','FINISHED','AET','PEN','FULLTIME','FULL TIME'].some(s => status.includes(s))) {
       statusText = 'FT'; isLive = false;
-    } else if (status === 'HT' || status === 'HALF TIME') {
+    } else if (status.includes('HT') || status.includes('HALF')) {
       statusText = 'HT'; isLive = true;
-    } else if (status === 'LIVE' || status === 'IN PLAY' || status === 'INPLAY' || minute) {
-      statusText = minute ? `${minute}'` : 'LIVE'; isLive = true;
+    } else if (['LIVE','IN PLAY','INPLAY','IN_PLAY','1H','2H','ET','BT'].some(s => status.includes(s)) || minute) {
+      statusText = minute ? minute + "'" : 'LIVE'; isLive = true;
     } else {
-      // Scheduled — try to show kick-off time
-      const d = m.matchTime || m.kickoff || m.date || '';
+      const d = m.matchTime || m.kickoff || m.date || m.datetime || '';
       if (d) {
-        try {
-          statusText = new Date(d).toLocaleTimeString('id-ID', {
-            hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta'
-          }) + ' WIB';
-        } catch { statusText = status || '–'; }
-      } else {
-        statusText = status || '–';
-      }
+        try { statusText = new Date(d).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Jakarta'})+' WIB'; }
+        catch { statusText = status || 'SEGERA'; }
+      } else { statusText = status || 'SEGERA'; }
       isLive = false;
     }
-
     return { home, away, hg, ag, statusText, isLive, league };
   }
 
-  // ── Render ───────────────────────────────────────────────────────────────
+  function extractMatches(data) {
+    if (Array.isArray(data)) return data;
+    for (const key of ['response','data','matches','liveMatches','fixtures','results','events','scores']) {
+      if (Array.isArray(data[key])) return data[key];
+    }
+    return [];
+  }
 
-  function renderCards(matches) {
-    if (!matches.length) {
-      strip.innerHTML = `<div class="score-empty">⚽ Tidak ada pertandingan live saat ini</div>`;
+  // ── Render ───────────────────────────────────────────────────────────────
+  function renderCards(matches, staleLabel) {
+    if (!matches || !matches.length) {
+      strip.innerHTML = '<div class="score-empty">⚽ Belum ada pertandingan live saat ini</div>';
       return;
     }
-    strip.innerHTML = matches.map(raw => {
+    const badge = staleLabel
+      ? '<div class="score-empty" style="flex-shrink:0;font-size:.7rem;opacity:.5;align-self:center;">📋 ' + staleLabel + '</div>'
+      : '';
+    strip.innerHTML = badge + matches.map(raw => {
       const m = normalise(raw);
-      const flag = flagFor(m.league);
-      const leagueLabel = m.league ? m.league.toUpperCase().substring(0, 20) : 'FOOTBALL';
-      return `
-        <div class="score-card ${m.isLive ? 'score-card--live' : ''}">
-          <div class="sc-league">${flag} ${leagueLabel}</div>
-          <div class="sc-match">
-            <span class="sc-team">${m.home}</span>
-            <span class="sc-score ${m.isLive ? 'sc-score--live' : ''}">${m.hg}–${m.ag}</span>
-            <span class="sc-team">${m.away}</span>
-            <span class="sc-status ${m.isLive ? 'sc-status--live' : ''}">${m.statusText}</span>
-          </div>
-        </div>`;
+      return '<div class="score-card ' + (m.isLive ? 'score-card--live' : '') + '">'
+           + '<div class="sc-league">' + flagFor(m.league) + ' ' + (m.league ? m.league.toUpperCase().substring(0,20) : 'FOOTBALL') + '</div>'
+           + '<div class="sc-match">'
+           + '<span class="sc-team">' + m.home + '</span>'
+           + '<span class="sc-score ' + (m.isLive ? 'sc-score--live' : '') + '">' + m.hg + '–' + m.ag + '</span>'
+           + '<span class="sc-team">' + m.away + '</span>'
+           + '<span class="sc-status ' + (m.isLive ? 'sc-status--live' : '') + '">' + m.statusText + '</span>'
+           + '</div></div>';
     }).join('');
-
-    document.querySelectorAll('.score-card').forEach((el, i) => {
-      el.style.animationDelay = `${i * 70}ms`;
+    document.querySelectorAll('.score-card').forEach(function(el, i) {
+      el.style.animationDelay = (i * 70) + 'ms';
       el.classList.add('score-enter');
     });
   }
 
   // ── Fetch ────────────────────────────────────────────────────────────────
-
-  async function fetchLiveScores() {
-    // Primary endpoint: all live match scores
-    const url = `https://${API_HOST}/football-get-all-live-matches-scores`;
+  async function fetchFromAPI() {
+    const url = 'https://' + API_HOST + '/football-get-all-live-matches-scores';
     const res = await fetch(url, {
-      headers: {
+      method  : 'GET',
+      headers : {
         'x-rapidapi-key'  : API_KEY,
         'x-rapidapi-host' : API_HOST
       }
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-
-    // API may wrap in response[], data[], matches[], or return an array directly
-    return data.response
-        || data.data
-        || data.matches
-        || data.liveMatches
-        || (Array.isArray(data) ? data : []);
+    const text = await res.text();
+    console.log('[scores] HTTP ' + res.status, text.slice(0, 300));
+    if (!res.ok) throw new Error('HTTP ' + res.status + ': ' + text.slice(0,120));
+    const data = JSON.parse(text);
+    return extractMatches(data);
   }
 
   // ── Main ─────────────────────────────────────────────────────────────────
-
   async function loadScores() {
-    // Check session cache
+    const { matches: cached, stale, ts } = loadCache();
+
+    // Always show cached data first — never leave the strip empty
+    if (cached && cached.length) {
+      const age   = ts ? Math.round((Date.now() - ts) / 60000) : null;
+      const label = stale && age ? 'Data ' + age + ' mnt lalu' : null;
+      renderCards(cached, label);
+    }
+
+    // Skip API call if cache is still fresh
+    if (!stale) return;
+
+    // Fetch fresh data in background
     try {
-      const cached = sessionStorage.getItem(CACHE_KEY);
-      if (cached) {
-        const { payload, ts } = JSON.parse(cached);
-        if (Date.now() - ts < CACHE_TTL) { renderCards(payload); return; }
-      }
-    } catch(e) {}
-
-    try {
-      const matches = await fetchLiveScores();
-
-      // Sort: live first, then finished
-      matches.sort((a, b) => {
-        const al = (a.matchStatus||'').toLowerCase().includes('live') ? 0 : 1;
-        const bl = (b.matchStatus||'').toLowerCase().includes('live') ? 0 : 1;
-        return al - bl;
-      });
-
-      try {
-        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ payload: matches, ts: Date.now() }));
-      } catch(e) {}
-
-      renderCards(matches);
+      const fresh = await fetchFromAPI();
+      // Sort: live → HT → FT → scheduled
+      const rank = function(m) {
+        const s = (m.matchStatus||'').toUpperCase();
+        if (s.includes('LIVE')||s.includes('1H')||s.includes('2H')||s.includes('IN PLAY')) return 0;
+        if (s.includes('HT')) return 1;
+        if (s.includes('FT')||s.includes('FINISH')) return 2;
+        return 3;
+      };
+      fresh.sort(function(a,b){ return rank(a)-rank(b); });
+      saveCache(fresh);
+      renderCards(fresh, null);
     } catch(err) {
-      strip.innerHTML = `<div class="score-empty">Gagal memuat skor — coba refresh</div>`;
-      console.error('[scores] fetch error:', err);
+      console.error('[scores] API error:', err.message);
+      // If we already showed cached data above, do nothing — don't overwrite with error
+      if (!cached || !cached.length) {
+        strip.innerHTML = '<div class="score-empty">⚽ Skor sedang tidak tersedia</div>';
+      }
     }
   }
 
   loadScores();
 
-  // Auto-refresh every 60 s when there are live matches on screen
-  setInterval(() => {
+  // Retry every 3 hours
+  setInterval(loadScores, CACHE_TTL);
+
+  // If live matches are on screen, also refresh every 60s
+  setInterval(function() {
     if (document.querySelector('.score-card--live')) loadScores();
   }, 60000);
+
 })();
 </script>
