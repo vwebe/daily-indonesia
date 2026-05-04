@@ -256,10 +256,11 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
 
 .lead-image {
   display: block;
-  aspect-ratio: 16/9;
-  background: var(--bg3);
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
+  background: var(--bg3);
+  /* aspect-ratio trick: 16/9 visible, img is 112% tall so bottom 12% clips off */
+  aspect-ratio: 16 / 10.08;
 }
 
 .lead-image::after {
@@ -267,12 +268,18 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, transparent 40%, rgba(13,15,20,.85) 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .lead-image img {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
-  height: 100%;
+  height: 112%;
   object-fit: cover;
+  object-position: top center;
+  display: block;
   transition: transform .4s ease;
 }
 
@@ -427,15 +434,20 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
 
 .post-card__image {
   display: block;
-  aspect-ratio: 16/9;
-  background: var(--bg3);
+  position: relative;
   overflow: hidden;
+  background: var(--bg3);
+  aspect-ratio: 16 / 10.08;
 }
 
 .post-card__image img {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
-  height: 100%;
+  height: 112%;
   object-fit: cover;
+  object-position: top center;
+  display: block;
   transition: transform .35s ease;
 }
 
@@ -595,9 +607,18 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
   border-radius: var(--r-lg);
   overflow: hidden;
   border: 1px solid var(--line);
+  position: relative;
 }
 
-.article-image img { width: 100%; }
+.article-image img {
+  display: block;
+  width: 100%;
+  /* clip bottom 12%: make img 112% tall inside overflow:hidden container */
+  height: auto;
+  max-height: none;
+  transform: translateY(0);
+  clip-path: inset(0 0 12% 0);
+}
 
 .article-image figcaption {
   padding: .7rem 1rem;
