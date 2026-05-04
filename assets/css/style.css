@@ -547,3 +547,28 @@ code{background:#eef2f7;padding:.15rem .35rem;border-radius:.4rem}
     gap:.2rem;
   }
 }
+.latest-time{
+  margin:0 0 .22rem;
+  color:#7a8496;
+  font-size:.72rem;
+  font-weight:750;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
+
+.latest-item h3{
+  margin:.15rem 0 .35rem;
+  font-size:1rem;
+  line-height:1.35;
+}
+
+.latest-excerpt{
+  margin:0;
+  color:#667085;
+  font-size:.86rem;
+  line-height:1.55;
+}
+
+.latest-item{
+  padding:.9rem 0;
+}
