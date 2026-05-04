@@ -1,9 +1,9 @@
-<!-- Scores Strip — pulled from post front matter (no API needed) -->
-{% assign shown_scores = 0 %}
-
+<!-- Scores Strip — pulled only from verified score front matter generated from source text -->
 <div class="score-strip" id="scoreStrip">
-  {% for post in site.posts limit: 30 %}
-    {% if shown_scores < 10 and post.home_team and post.away_team and post.home_score != nil and post.away_score != nil %}
+  {% assign shown_scores = 0 %}
+
+  {% for post in site.posts limit: 60 %}
+    {% if shown_scores < 10 and post.score_verified == true and post.home_team and post.away_team and post.home_score != nil and post.away_score != nil %}
       {% assign status = post.match_status | default: "FT" | upcase %}
       {% assign is_live = false %}
       {% if status == "LIVE" or status == "HT" or status contains "'" %}
