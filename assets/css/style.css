@@ -9,3 +9,14 @@
 .internal-link{margin:1.1rem 0;padding:.9rem 1rem;border-left:4px solid var(--accent);border-radius:.8rem;background:#f0fdf4;color:#14532d}.internal-link a{color:var(--accent-dark);font-weight:800;text-decoration:underline;text-underline-offset:3px}.recommendation-box{margin-top:2rem;padding:1rem;border-radius:1rem;background:#f0fdf4;border:1px solid #bbf7d0}.tag-section{margin-top:2rem}.post-list{list-style:none;padding:0;margin:0}.post-list li{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--line)}.post-list span{color:var(--muted);font-size:.9rem;white-space:nowrap}.empty-state{padding:2rem;grid-column:1/-1;color:var(--muted)}.empty-state h2{color:var(--text);margin-top:0}.site-footer{padding:2rem 1rem;text-align:center;color:var(--muted);border-top:1px solid var(--line)}.site-footer p{margin:.35rem 0}
 @media(max-width:900px){.post-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.site-header{align-items:flex-start;flex-direction:column}.site-nav{width:100%;justify-content:space-between;gap:.5rem;font-size:.92rem}.post-grid{grid-template-columns:1fr}.post-list li{flex-direction:column;gap:.2rem}}
+/* Logo patch: add to bottom of assets/css/style.css */
+.brand-logo {
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: contain;
+  border-radius: 0.75rem;
+}
+
+.brand-mark {
+  display: none;
+}
