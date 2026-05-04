@@ -8,10 +8,6 @@ tags: ["Berita Bola", "Sepak Bola", "Manchester United", "Premier League", "Brun
 image: "https://asset.kompas.com/crops/bOofo9CeXFPF8AxuRO_w6KdagC0=/145x0:875x487/1200x675/filters:watermark(data/photo/2026/01/30/697c8163c3944.png,0,-0,1)/data/photo/2026/01/12/6964474815ec1.jpg"
 image_caption: "Bruno Fernandes berpose di Old Trafford setelah mengumumkan keputusan untuk tetap bersama klub."
 image_clip_bottom_percent: 10
-source_title: ""
-source_url: ""
-source_site: ""
-source_published_at: ""
 seo_title: "Bruno Fernandes Pilih Bertahan di Man United"
 seo_description: "Bruno Fernandes menegaskan komitmen pada Manchester United dan menolak tawaran dari klub Arab Saudi, keputusan yang berdampak pada strategi transfer dan harapan suporter."
 slug: "bruno-fernandes-pilih-bertahan-di-man-united-tolak-tawaran-saudi"
