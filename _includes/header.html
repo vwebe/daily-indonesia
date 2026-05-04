@@ -1,13 +1,32 @@
 <header class="site-header">
-  <a class="brand" href="{{ '/' | relative_url }}">
-    <img class="brand-logo" src="{{ '/assets/img/logo.png' | relative_url }}" alt="{{ site.title | escape }}">
-    <span>{{ site.title }}</span>
-  </a>
+  <div class="header-inner">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-text">ZYNELION<span class="brand-accent">SPORTS</span></span>
+    </a>
 
-  <nav class="site-nav">
-    <a href="{{ '/' | relative_url }}">Home</a>
-    <a href="{{ '/archive/' | relative_url }}">Archive</a>
-    <a href="{{ '/tags/' | relative_url }}">Tags</a>
-    <a href="{{ '/about/' | relative_url }}">About</a>
-  </nav>
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
+      <a href="{{ '/archive/' | relative_url }}" class="nav-link">Semua Berita</a>
+      <a href="{{ '/tags/' | relative_url }}" class="nav-link">Topik</a>
+      <a href="{{ '/about/' | relative_url }}" class="nav-link">Tentang</a>
+    </nav>
+
+    <div class="header-live">
+      <span class="live-dot"></span>
+      <span>LIVE UPDATE</span>
+    </div>
+  </div>
+
+  <div class="header-categories">
+    <div class="cats-inner">
+      <a href="{{ '/tags/' | relative_url }}#premier-league" class="cat-pill">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</a>
+      <a href="{{ '/tags/' | relative_url }}#la-liga" class="cat-pill">🇪🇸 La Liga</a>
+      <a href="{{ '/tags/' | relative_url }}#serie-a" class="cat-pill">🇮🇹 Serie A</a>
+      <a href="{{ '/tags/' | relative_url }}#liga-indonesia" class="cat-pill">🇮🇩 Liga Indonesia</a>
+      <a href="{{ '/tags/' | relative_url }}#transfer" class="cat-pill">🔄 Transfer</a>
+      <a href="{{ '/tags/' | relative_url }}#champions-league" class="cat-pill">🏆 UCL</a>
+      <a href="{{ '/tags/' | relative_url }}#timnas" class="cat-pill">⭐ Timnas</a>
+    </div>
+  </div>
 </header>

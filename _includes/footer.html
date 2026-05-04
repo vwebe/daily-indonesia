@@ -1,4 +1,37 @@
 <footer class="site-footer">
-  <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}.</p>
-  <p>Ringkasan berita sepak bola harian Indonesia dan dunia.</p>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">⚽ ZYNELION<strong>SPORTS</strong></span>
+      <p>Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, dan analisis mendalam.</p>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Navigasi</h4>
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/archive/' | relative_url }}">Semua Berita</a>
+        <a href="{{ '/tags/' | relative_url }}">Topik</a>
+        <a href="{{ '/about/' | relative_url }}">Tentang</a>
+      </div>
+      <div class="footer-col">
+        <h4>Liga Populer</h4>
+        <a href="{{ '/tags/' | relative_url }}#premier-league">Premier League</a>
+        <a href="{{ '/tags/' | relative_url }}#la-liga">La Liga</a>
+        <a href="{{ '/tags/' | relative_url }}#serie-a">Serie A</a>
+        <a href="{{ '/tags/' | relative_url }}#liga-indonesia">Liga Indonesia</a>
+      </div>
+      <div class="footer-col">
+        <h4>Topik Lain</h4>
+        <a href="{{ '/tags/' | relative_url }}#transfer">Berita Transfer</a>
+        <a href="{{ '/tags/' | relative_url }}#timnas">Timnas Indonesia</a>
+        <a href="{{ '/tags/' | relative_url }}#champions-league">Liga Champions</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {{ site.time | date: "%Y" }} Zynelion Sports · <a href="https://sports.zynelion.com">sports.zynelion.com</a></p>
+    <p>Informasi olahraga Indonesia dan dunia setiap hari</p>
+  </div>
 </footer>
