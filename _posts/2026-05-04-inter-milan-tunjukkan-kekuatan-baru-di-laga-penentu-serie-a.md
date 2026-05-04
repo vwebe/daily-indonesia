@@ -10,7 +10,7 @@ image_caption: "Inter Milan beraksi dalam laga Serie A yang menentukan posisi kl
 image_clip_bottom_percent: 10
 seo_title: "Inter Milan Tampil Percaya Diri di Serie A – Analisis Laga"
 seo_description: "Analisis mendalam jalannya pertandingan Inter Milan, titik balik taktis, performa tim, dan dampak hasil bagi klasemen Serie A menjelang akhir musim."
-news_type: "Laporan hasil pertandingan"
+news_type: "hasil"
 home_team: "Inter Milan"
 away_team: "Napoli"
 home_score: 2

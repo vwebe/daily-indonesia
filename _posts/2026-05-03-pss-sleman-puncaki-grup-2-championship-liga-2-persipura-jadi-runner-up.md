@@ -10,6 +10,7 @@ image_caption: "PSS Sleman bersiap menatap final Championship Liga 2 2025‑2026
 image_clip_bottom_percent: 10
 seo_title: "PSS Sleman Juara Grup 2 Championship Liga 2 2025‑2026"
 seo_description: "PSS Sleman menutup fase grup 2 Championship Liga 2 2025‑2026 sebagai peringkat pertama, sementara Persipura Jayapura mengamankan posisi runner‑up. Kedua tim bersiap menyongsong babak final."
+news_type: "hasil"
 home_team: "PSS Sleman"
 away_team: "Persipura"
 home_score: 2
