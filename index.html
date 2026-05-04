@@ -10,44 +10,7 @@ description: Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, da
   <span>Berita sepak bola pilihan hari ini: hasil pertandingan, transfer terbaru, klasemen liga, dan kabar timnas Indonesia.</span>
 </section>
 
-<!-- Live scores strip -->
-<div class="score-strip">
-  <div class="score-card">
-    <div>
-      <div class="league">Premier League</div>
-      <div class="teams"><span>MAN UTD</span><span class="score">2 – 1</span><span>CHELSEA</span></div>
-    </div>
-    <span class="status">FT</span>
-  </div>
-  <div class="score-card">
-    <div>
-      <div class="league">Serie A</div>
-      <div class="teams"><span>INTER</span><span class="score">3 – 0</span><span>MILAN</span></div>
-    </div>
-    <span class="status">FT</span>
-  </div>
-  <div class="score-card">
-    <div>
-      <div class="league">La Liga</div>
-      <div class="teams"><span>BARCA</span><span class="score">1 – 1</span><span>ATLETICO</span></div>
-    </div>
-    <span class="status">FT</span>
-  </div>
-  <div class="score-card">
-    <div>
-      <div class="league">Liga 2 Indonesia</div>
-      <div class="teams"><span>PSS</span><span class="score">2 – 0</span><span>PERSIPURA</span></div>
-    </div>
-    <span class="status">FT</span>
-  </div>
-  <div class="score-card">
-    <div>
-      <div class="league">Bundesliga</div>
-      <div class="teams"><span>DORTMUND</span><span class="score">2 – 2</span><span>LEVERKUSEN</span></div>
-    </div>
-    <span class="status">FT</span>
-  </div>
-</div>
+{% include scores.html %}
 
 {% assign featured = site.posts | first %}
 
