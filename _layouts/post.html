@@ -4,7 +4,9 @@ layout: default
 
 <article class="article">
   <header class="article-header">
-    <p class="post-meta">SPORTS NEWS, {{ page.date | date: "%d %B %Y, %H:%M" }} WIB</p>
+    <p class="post-meta">
+      ⚽ {{ page.categories | first | upcase | default: "SPORTS NEWS" }} &nbsp;·&nbsp; {{ page.date | date: "%d %B %Y, %H:%M" }} WIB
+    </p>
     <h1>{{ page.title }}</h1>
 
     {% if page.description and page.description != "Ringkasan topik bola terbaru yang diterbitkan otomatis." %}
@@ -14,7 +16,7 @@ layout: default
 
   {% assign post_image = page.image | default: '/assets/img/default-news.svg' %}
   {% if post_image %}
-    <figure class="article-image article-image--cropped">
+    <figure class="article-image">
       {% if post_image contains '://' %}
         <img src="{{ post_image }}" alt="{{ page.title | escape }}" loading="lazy">
       {% else %}
@@ -22,7 +24,7 @@ layout: default
       {% endif %}
 
       {% if page.image_caption %}
-        <figcaption>{{ page.image_caption }}</figcaption>
+        <figcaption>📸 {{ page.image_caption }}</figcaption>
       {% endif %}
     </figure>
   {% endif %}
@@ -33,7 +35,7 @@ layout: default
 
   {% if page.tags %}
     <footer class="article-tags">
-      <strong>Topik terkait:</strong>
+      <strong>Topik Terkait</strong>
       <div class="tag-row">
         {% for tag in page.tags %}
           <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
@@ -43,9 +45,9 @@ layout: default
   {% endif %}
 
   <section class="more-news">
-    <h2>Berita Lainnya</h2>
+    <h2>Baca Juga</h2>
     <div class="more-news-list">
-      {% for post in site.posts limit:5 %}
+      {% for post in site.posts limit:6 %}
         {% if post.url != page.url %}
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         {% endif %}
