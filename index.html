@@ -24,7 +24,7 @@ description: Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, 
     </a>
 
     <div class="lead-body">
-      <p class="post-meta">{{ featured.date | date: "%d %B %Y" }}</p>
+      <p class="post-meta">SPORTS NEWS, {{ featured.date | date: "%d %B %Y, %H:%M" }} WIB</p>
       <h1><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h1>
       {% if featured.description %}
         <p>{{ featured.description | strip_html | truncate: 180 }}</p>
@@ -36,7 +36,7 @@ description: Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, 
     <h2>Berita Terbaru</h2>
     {% for post in site.posts offset:1 limit:5 %}
       <article class="latest-item">
-        <p class="post-meta">{{ post.date | date: "%d %b %Y" }}</p>
+        <p class="post-meta">SPORTS NEWS, {{ post.date | date: "%d %B %Y, %H:%M" }} WIB</p>
         <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
       </article>
     {% endfor %}
@@ -61,7 +61,7 @@ description: Berita olahraga harian Indonesia dan dunia dengan ringkasan jelas, 
       </a>
 
       <div class="post-card__body">
-        <p class="post-meta">{{ post.date | date: "%d %B %Y" }}</p>
+        <p class="post-meta">SPORTS NEWS, {{ post.date | date: "%d %B %Y, %H:%M" }} WIB</p>
         <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
 
         {% if post.tags %}
