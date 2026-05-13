@@ -1221,3 +1221,43 @@ body {
   from { transform: rotate(-20deg) scale(.8); }
   to   { transform: rotate(0deg)   scale(1); }
 }
+
+/* Evergreen football hub additions */
+.quick-hubs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.25rem auto 2rem;
+}
+
+.hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+  padding: 1.1rem;
+  border-radius: 18px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 12px 40px rgba(0,0,0,.18);
+}
+
+.hub-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(20,184,166,.55);
+}
+
+.hub-card span { font-size: 2rem; }
+.hub-card strong { font-size: 1.05rem; color: var(--accent); }
+.hub-card small { line-height: 1.55; opacity: .82; }
+
+.article-image figcaption span,
+.article-image figcaption a {
+  display: inline-block;
+  margin-left: .45rem;
+}
+
+@media (max-width: 780px) {
+  .quick-hubs { grid-template-columns: 1fr; }
+}
