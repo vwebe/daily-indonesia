@@ -6,19 +6,22 @@ description: Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola 
 
 <section class="news-ticker">
   <strong>GUIDE</strong>
-  <span>Profil pemain, perjalanan karier, sejarah klub, stadion, rivalitas, dan informasi sepak bola yang cocok untuk dibaca kapan saja.</span>
+  <span>Profil pemain, perjalanan karier, sejarah klub, stadion, rivalitas, dan informasi sepak bola yang cocok dibaca kapan saja.</span>
 </section>
 
-<section class="quick-hubs" aria-label="Football guide sections">
+<section class="quick-hubs">
   <a class="hub-card" href="{{ '/players/' | relative_url }}">
+    <span>Player Profiles</span>
     <strong>Player Profiles</strong>
     <small>Bio, posisi, klub, negara, gaya bermain, dan prestasi.</small>
   </a>
   <a class="hub-card" href="{{ '/clubs/' | relative_url }}">
+    <span>Club Profiles</span>
     <strong>Club Profiles</strong>
     <small>Sejarah klub, stadion, rivalitas, pemain legenda, dan trofi.</small>
   </a>
   <a class="hub-card" href="{{ '/stories/' | relative_url }}">
+    <span>Career Stories</span>
     <strong>Career Stories</strong>
     <small>Perjalanan karier pemain dari awal hingga momen penting.</small>
   </a>
@@ -36,14 +39,13 @@ description: Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola 
       {% else %}
         <img src="{{ featured_image | relative_url }}" alt="{{ featured.title | escape }}" loading="lazy">
       {% endif %}
-      <span class="sr-only">{{ featured.title }}</span>
     </a>
 
     <div class="lead-body">
       <p class="post-meta">FEATURED · {{ featured.date | date: "%d %B %Y" }}</p>
       <h1><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h1>
       {% if featured.description %}
-        <p>{{ featured.description | strip_html | truncate: 200 }}</p>
+        <p>{{ featured.description | strip_html | truncate: 170 }}</p>
       {% endif %}
       {% if featured.tags %}
       <div class="tag-row" style="margin-top:auto; padding-top:1rem;">
@@ -69,16 +71,9 @@ description: Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola 
       </article>
     {% endfor %}
     {% if latest_count == 0 %}
-      <div class="latest-empty">
-        <p>Artikel berikutnya akan tampil otomatis setelah post kedua terbit.</p>
-      </div>
+      <p class="latest-excerpt">Artikel berikutnya akan tampil di sini setelah post kedua diterbitkan.</p>
     {% endif %}
   </aside>
-</section>
-{% else %}
-<section class="empty-state empty-state--home">
-  <h2>Belum ada artikel</h2>
-  <p>Publish profil pemain atau klub pertama dari Apps Script.</p>
 </section>
 {% endif %}
 
@@ -90,22 +85,18 @@ description: Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola 
 <section class="post-grid compact-grid">
   {% for post in site.posts offset:1 limit:12 %}
     <article class="post-card">
-      <a class="post-card__image" href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">
+      <a class="post-card__image" href="{{ post.url | relative_url }}">
         {% assign card_image = post.image | default: '/assets/img/default-football.svg' %}
         {% if card_image contains '://' %}
           <img src="{{ card_image }}" alt="{{ post.title | escape }}" loading="lazy">
         {% else %}
           <img src="{{ card_image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
         {% endif %}
-        <span class="sr-only">{{ post.title }}</span>
       </a>
 
       <div class="post-card__body">
         <p class="post-meta">{{ post.date | date: "%d %B %Y" }}</p>
         <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-        {% if post.description %}
-          <p class="latest-excerpt">{{ post.description | strip_html | truncate: 110 }}</p>
-        {% endif %}
 
         {% if post.tags %}
           <div class="tag-row">
@@ -119,7 +110,7 @@ description: Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola 
   {% else %}
     <div class="empty-state">
       <h2>Belum ada artikel lainnya</h2>
-      <p>Setelah post kedua terbit, daftar artikel tambahan akan tampil di sini.</p>
+      <p>Tambahkan profil pemain atau klub dari Apps Script.</p>
     </div>
   {% endfor %}
 </section>
