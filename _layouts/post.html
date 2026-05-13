@@ -2,65 +2,32 @@
 layout: default
 ---
 
-{% assign facts_count = 0 %}
-{% if page.quick_facts %}
-  {% for item in page.quick_facts %}
-    {% if item.label and item.value %}
-      {% assign facts_count = facts_count | plus: 1 %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
-{% assign post_image = page.image | default: '/assets/img/default-football.svg' %}
-{% assign secondary_image = page.secondary_image | default: page.image_2 %}
-
-<article class="article article--reference">
-  <header class="article-header article-header--reference">
+<article class="profile-article">
+  <header class="profile-header">
     <p class="post-meta">
       {{ page.categories | first | replace: '-', ' ' | upcase | default: "FOOTBALL GUIDE" }} &nbsp;·&nbsp; {{ page.date | date: "%d %B %Y" }}
     </p>
     <h1>{{ page.title }}</h1>
-
-    {% if page.description and page.description != "Ringkasan topik bola terbaru yang diterbitkan otomatis." %}
-      <p class="article-desc">{{ page.description }}</p>
+    {% if page.description %}
+      <p class="profile-summary">{{ page.description }}</p>
     {% endif %}
   </header>
 
-  {% if facts_count > 0 %}
-    <section class="quick-facts quick-facts--inline" aria-labelledby="quick-facts-title">
-      <h2 id="quick-facts-title">Fakta Singkat</h2>
-      <dl>
-        {% for item in page.quick_facts %}
-          {% if item.label and item.value %}
-            <div>
-              <dt>{{ item.label }}</dt>
-              <dd>{{ item.value }}</dd>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </dl>
-    </section>
-  {% endif %}
-
-  <nav class="article-toc article-toc--wide" aria-label="Daftar isi artikel">
-    <h2>Daftar Isi</h2>
-    <ol id="article-toc-list"></ol>
-  </nav>
-
-  <section class="article-media-strip{% unless secondary_image %} is-single{% endunless %}" aria-label="Gambar artikel">
-    {% if post_image %}
-      <figure class="article-image article-image--primary">
-        {% if post_image contains '://' %}
-          <img src="{{ post_image }}" alt="{{ page.title | escape }}" loading="lazy">
+  {% assign primary_image = page.image | default: '/assets/img/default-football.svg' %}
+  {% assign secondary_image = page.image2 | default: page.secondary_image %}
+  <section class="profile-media{% if secondary_image %} has-secondary{% endif %}" aria-label="Article images">
+    {% if primary_image %}
+      <figure class="profile-photo profile-photo-primary">
+        {% if primary_image contains '://' %}
+          <img src="{{ primary_image }}" alt="{{ page.image_alt | default: page.title | escape }}" loading="eager">
         {% else %}
-          <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
+          <img src="{{ primary_image | relative_url }}" alt="{{ page.image_alt | default: page.title | escape }}" loading="eager">
         {% endif %}
-
-        {% if page.image_caption or page.image_credit or page.image_license %}
+        {% if page.image_caption or page.image_credit or page.image_license or page.image_source_page %}
           <figcaption>
-            {% if page.image_caption %}<span class="caption-text">{{ page.image_caption }}</span>{% endif %}
-            {% if page.image_credit %}<span class="image-credit">Credit: {{ page.image_credit }}</span>{% endif %}
-            {% if page.image_license %}<span class="image-license">License: {{ page.image_license }}</span>{% endif %}
+            {% if page.image_caption %}<span>{{ page.image_caption }}</span>{% endif %}
+            {% if page.image_credit %}<span>Credit: {{ page.image_credit }}</span>{% endif %}
+            {% if page.image_license %}<span>License: {{ page.image_license }}</span>{% endif %}
             {% if page.image_source_page %}<a href="{{ page.image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
           </figcaption>
         {% endif %}
@@ -68,41 +35,51 @@ layout: default
     {% endif %}
 
     {% if secondary_image %}
-      <figure class="article-image article-image--secondary">
+      <figure class="profile-photo profile-photo-secondary">
         {% if secondary_image contains '://' %}
-          <img src="{{ secondary_image }}" alt="Gambar pendukung {{ page.title | escape }}" loading="lazy">
+          <img src="{{ secondary_image }}" alt="{{ page.image2_alt | default: page.title | append: ' context image' | escape }}" loading="lazy">
         {% else %}
-          <img src="{{ secondary_image | relative_url }}" alt="Gambar pendukung {{ page.title | escape }}" loading="lazy">
+          <img src="{{ secondary_image | relative_url }}" alt="{{ page.image2_alt | default: page.title | append: ' context image' | escape }}" loading="lazy">
         {% endif %}
-        {% if page.secondary_image_caption or page.secondary_image_credit or page.secondary_image_license %}
+        {% if page.image2_caption or page.image2_credit or page.image2_license or page.image2_source_page %}
           <figcaption>
-            {% if page.secondary_image_caption %}<span class="caption-text">{{ page.secondary_image_caption }}</span>{% endif %}
-            {% if page.secondary_image_credit %}<span class="image-credit">Credit: {{ page.secondary_image_credit }}</span>{% endif %}
-            {% if page.secondary_image_license %}<span class="image-license">License: {{ page.secondary_image_license }}</span>{% endif %}
-            {% if page.secondary_image_source_page %}<a href="{{ page.secondary_image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
+            {% if page.image2_caption %}<span>{{ page.image2_caption }}</span>{% endif %}
+            {% if page.image2_credit %}<span>Credit: {{ page.image2_credit }}</span>{% endif %}
+            {% if page.image2_license %}<span>License: {{ page.image2_license }}</span>{% endif %}
+            {% if page.image2_source_page %}<a href="{{ page.image2_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
           </figcaption>
         {% endif %}
       </figure>
     {% endif %}
   </section>
 
-  {% if page.key_points %}
-    <section class="key-points key-points--compact" aria-labelledby="key-points-title">
-      <h2 id="key-points-title">Poin Penting</h2>
-      <ul>
-        {% for point in page.key_points %}
-          <li>{{ point }}</li>
+  {% if page.quick_facts and page.quick_facts.size > 0 %}
+    <section class="quick-facts" aria-label="Quick facts">
+      <h2>Quick Facts</h2>
+      <dl>
+        {% for fact in page.quick_facts %}
+          {% if fact.label and fact.value %}
+            <div>
+              <dt>{{ fact.label }}</dt>
+              <dd>{{ fact.value }}</dd>
+            </div>
+          {% endif %}
         {% endfor %}
-      </ul>
+      </dl>
     </section>
   {% endif %}
 
-  <div class="article-body" id="article-body">
+  <nav class="article-toc" aria-label="Table of contents" hidden>
+    <strong>Daftar Isi</strong>
+    <ol></ol>
+  </nav>
+
+  <div class="profile-body" id="profile-body">
     {{ content }}
   </div>
 
   {% if page.tags %}
-    <footer class="article-tags">
+    <footer class="article-tags profile-tags">
       <strong>Topik Terkait</strong>
       <div class="tag-row">
         {% for tag in page.tags %}
@@ -112,7 +89,7 @@ layout: default
     </footer>
   {% endif %}
 
-  <section class="more-news more-news--reference">
+  <section class="more-news profile-related">
     <h2>Baca Juga</h2>
     <div class="more-news-list">
       {% assign related_count = 0 %}
@@ -143,28 +120,23 @@ layout: default
 
 <script>
 (function () {
-  var body = document.getElementById('article-body');
-  var list = document.getElementById('article-toc-list');
-  if (!body || !list) return;
-  var headings = body.querySelectorAll('h2');
-  if (!headings.length) {
-    var toc = list.closest('.article-toc');
-    if (toc) toc.style.display = 'none';
-    return;
-  }
-  headings.forEach(function (heading, index) {
-    if (!heading.id) {
-      heading.id = 'section-' + (index + 1) + '-' + heading.textContent.toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .trim()
-        .replace(/\s+/g, '-');
-    }
-    var item = document.createElement('li');
-    var link = document.createElement('a');
-    link.href = '#' + heading.id;
-    link.textContent = heading.textContent;
-    item.appendChild(link);
-    list.appendChild(item);
+  var body = document.getElementById('profile-body');
+  var toc = document.querySelector('.article-toc');
+  if (!body || !toc) return;
+  var headings = Array.prototype.slice.call(body.querySelectorAll('h2')).filter(function (h) {
+    return h.textContent.trim().length > 0;
   });
+  if (headings.length < 2) return;
+  var list = toc.querySelector('ol');
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'section-' + (i + 1) + '-' + h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent.trim();
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+  toc.hidden = false;
 })();
 </script>
