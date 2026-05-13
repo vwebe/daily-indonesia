@@ -5,7 +5,7 @@ layout: default
 <article class="article">
   <header class="article-header">
     <p class="post-meta">
-      ⚽ {{ page.categories | first | replace: '-', ' ' | upcase | default: "FOOTBALL GUIDE" }} &nbsp;·&nbsp; {{ page.date | date: "%d %B %Y" }}
+      {{ page.categories | first | replace: '-', ' ' | upcase | default: "FOOTBALL GUIDE" }} &nbsp;·&nbsp; {{ page.date | date: "%d %B %Y" }}
     </p>
     <h1>{{ page.title }}</h1>
 
@@ -25,7 +25,7 @@ layout: default
 
       {% if page.image_caption or page.image_credit or page.image_license %}
         <figcaption>
-          {% if page.image_caption %}📸 {{ page.image_caption }}{% endif %}
+          {% if page.image_caption %}{{ page.image_caption }}{% endif %}
           {% if page.image_credit %}<span class="image-credit">Credit: {{ page.image_credit }}</span>{% endif %}
           {% if page.image_license %}<span class="image-license">License: {{ page.image_license }}</span>{% endif %}
           {% if page.image_source_page %}<a href="{{ page.image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
