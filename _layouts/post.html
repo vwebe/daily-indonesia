@@ -5,7 +5,7 @@ layout: default
 <article class="article">
   <header class="article-header">
     <p class="post-meta">
-      ⚽ {{ page.categories | first | upcase | default: "SPORTS NEWS" }} &nbsp;·&nbsp; {{ page.date | date: "%d %B %Y, %H:%M" }} WIB
+      ⚽ {{ page.categories | first | replace: '-', ' ' | upcase | default: "FOOTBALL GUIDE" }} &nbsp;·&nbsp; {{ page.date | date: "%d %B %Y" }}
     </p>
     <h1>{{ page.title }}</h1>
 
@@ -14,7 +14,7 @@ layout: default
     {% endif %}
   </header>
 
-  {% assign post_image = page.image | default: '/assets/img/default-news.svg' %}
+  {% assign post_image = page.image | default: '/assets/img/default-football.svg' %}
   {% if post_image %}
     <figure class="article-image">
       {% if post_image contains '://' %}
@@ -23,8 +23,13 @@ layout: default
         <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
       {% endif %}
 
-      {% if page.image_caption %}
-        <figcaption>📸 {{ page.image_caption }}</figcaption>
+      {% if page.image_caption or page.image_credit or page.image_license %}
+        <figcaption>
+          {% if page.image_caption %}📸 {{ page.image_caption }}{% endif %}
+          {% if page.image_credit %}<span class="image-credit">Credit: {{ page.image_credit }}</span>{% endif %}
+          {% if page.image_license %}<span class="image-license">License: {{ page.image_license }}</span>{% endif %}
+          {% if page.image_source_page %}<a href="{{ page.image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
+        </figcaption>
       {% endif %}
     </figure>
   {% endif %}
@@ -47,11 +52,28 @@ layout: default
   <section class="more-news">
     <h2>Baca Juga</h2>
     <div class="more-news-list">
-      {% for post in site.posts limit:6 %}
-        {% if post.url != page.url %}
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      {% assign related_count = 0 %}
+      {% for post in site.posts %}
+        {% if post.url != page.url and related_count < 6 %}
+          {% assign same_category = false %}
+          {% for cat in page.categories %}
+            {% if post.categories contains cat %}
+              {% assign same_category = true %}
+            {% endif %}
+          {% endfor %}
+          {% if same_category %}
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            {% assign related_count = related_count | plus: 1 %}
+          {% endif %}
         {% endif %}
       {% endfor %}
+      {% if related_count == 0 %}
+        {% for post in site.posts limit:6 %}
+          {% if post.url != page.url %}
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
     </div>
   </section>
 </article>
