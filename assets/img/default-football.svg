@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Zynelion Sports default football image">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101827"/>
+      <stop offset="0.55" stop-color="#133c35"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="ball" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dbeafe"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#g)"/>
+  <g opacity="0.22" stroke="#ffffff" stroke-width="3" fill="none">
+    <rect x="90" y="80" width="1080" height="560" rx="34"/>
+    <line x1="640" y1="80" x2="640" y2="640"/>
+    <circle cx="640" cy="360" r="92"/>
+    <rect x="90" y="210" width="170" height="300" rx="12"/>
+    <rect x="1000" y="210" width="170" height="300" rx="12"/>
+  </g>
+  <circle cx="640" cy="330" r="92" fill="url(#ball)" opacity="0.95"/>
+  <path d="M640 250l47 34-18 56h-58l-18-56z" fill="#111827"/>
+  <path d="M568 315l43 25-16 50-48 4-24-42zM712 315l45 37-25 42-48-4-16-50zM594 431l30-41h56l30 41-40 42h-60z" fill="#111827" opacity="0.9"/>
+  <text x="640" y="540" fill="#ffffff" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="800" letter-spacing="3">ZYNELION SPORTS</text>
+  <text x="640" y="590" fill="#bbf7d0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="2">FOOTBALL PROFILES • CLUB HISTORY • CAREER STORIES</text>
+</svg>
