@@ -2,8 +2,20 @@
 layout: default
 ---
 
+{% assign facts_count = 0 %}
+{% if page.quick_facts %}
+  {% for item in page.quick_facts %}
+    {% if item.label and item.value %}
+      {% assign facts_count = facts_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% assign post_image = page.image | default: '/assets/img/default-football.svg' %}
+{% assign secondary_image = page.secondary_image | default: page.image_2 %}
+
 <article class="article article--reference">
-  <header class="article-header">
+  <header class="article-header article-header--reference">
     <p class="post-meta">
       {{ page.categories | first | replace: '-', ' ' | upcase | default: "FOOTBALL GUIDE" }} &nbsp;·&nbsp; {{ page.date | date: "%d %B %Y" }}
     </p>
@@ -14,10 +26,28 @@ layout: default
     {% endif %}
   </header>
 
-  {% assign post_image = page.image | default: '/assets/img/default-football.svg' %}
-  {% assign secondary_image = page.secondary_image | default: page.image_2 %}
+  {% if facts_count > 0 %}
+    <section class="quick-facts quick-facts--inline" aria-labelledby="quick-facts-title">
+      <h2 id="quick-facts-title">Fakta Singkat</h2>
+      <dl>
+        {% for item in page.quick_facts %}
+          {% if item.label and item.value %}
+            <div>
+              <dt>{{ item.label }}</dt>
+              <dd>{{ item.value }}</dd>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </dl>
+    </section>
+  {% endif %}
 
-  <div class="article-reference-grid">
+  <nav class="article-toc article-toc--wide" aria-label="Daftar isi artikel">
+    <h2>Daftar Isi</h2>
+    <ol id="article-toc-list"></ol>
+  </nav>
+
+  <section class="article-media-strip{% unless secondary_image %} is-single{% endunless %}" aria-label="Gambar artikel">
     {% if post_image %}
       <figure class="article-image article-image--primary">
         {% if post_image contains '://' %}
@@ -28,7 +58,7 @@ layout: default
 
         {% if page.image_caption or page.image_credit or page.image_license %}
           <figcaption>
-            {% if page.image_caption %}{{ page.image_caption }}{% endif %}
+            {% if page.image_caption %}<span class="caption-text">{{ page.image_caption }}</span>{% endif %}
             {% if page.image_credit %}<span class="image-credit">Credit: {{ page.image_credit }}</span>{% endif %}
             {% if page.image_license %}<span class="image-license">License: {{ page.image_license }}</span>{% endif %}
             {% if page.image_source_page %}<a href="{{ page.image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
@@ -37,50 +67,27 @@ layout: default
       </figure>
     {% endif %}
 
-    <aside class="article-side-panel">
-      {% if page.quick_facts %}
-        <section class="quick-facts" aria-labelledby="quick-facts-title">
-          <h2 id="quick-facts-title">Fakta Singkat</h2>
-          <dl>
-            {% for item in page.quick_facts %}
-              {% if item.label and item.value %}
-                <div>
-                  <dt>{{ item.label }}</dt>
-                  <dd>{{ item.value }}</dd>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </dl>
-        </section>
-      {% endif %}
-
-      <nav class="article-toc" aria-label="Daftar isi artikel">
-        <h2>Daftar Isi</h2>
-        <ol id="article-toc-list"></ol>
-      </nav>
-    </aside>
-  </div>
-
-  {% if secondary_image %}
-    <figure class="article-image article-image--secondary">
-      {% if secondary_image contains '://' %}
-        <img src="{{ secondary_image }}" alt="Gambar pendukung {{ page.title | escape }}" loading="lazy">
-      {% else %}
-        <img src="{{ secondary_image | relative_url }}" alt="Gambar pendukung {{ page.title | escape }}" loading="lazy">
-      {% endif %}
-      {% if page.secondary_image_caption or page.secondary_image_credit or page.secondary_image_license %}
-        <figcaption>
-          {% if page.secondary_image_caption %}{{ page.secondary_image_caption }}{% endif %}
-          {% if page.secondary_image_credit %}<span class="image-credit">Credit: {{ page.secondary_image_credit }}</span>{% endif %}
-          {% if page.secondary_image_license %}<span class="image-license">License: {{ page.secondary_image_license }}</span>{% endif %}
-          {% if page.secondary_image_source_page %}<a href="{{ page.secondary_image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
-        </figcaption>
-      {% endif %}
-    </figure>
-  {% endif %}
+    {% if secondary_image %}
+      <figure class="article-image article-image--secondary">
+        {% if secondary_image contains '://' %}
+          <img src="{{ secondary_image }}" alt="Gambar pendukung {{ page.title | escape }}" loading="lazy">
+        {% else %}
+          <img src="{{ secondary_image | relative_url }}" alt="Gambar pendukung {{ page.title | escape }}" loading="lazy">
+        {% endif %}
+        {% if page.secondary_image_caption or page.secondary_image_credit or page.secondary_image_license %}
+          <figcaption>
+            {% if page.secondary_image_caption %}<span class="caption-text">{{ page.secondary_image_caption }}</span>{% endif %}
+            {% if page.secondary_image_credit %}<span class="image-credit">Credit: {{ page.secondary_image_credit }}</span>{% endif %}
+            {% if page.secondary_image_license %}<span class="image-license">License: {{ page.secondary_image_license }}</span>{% endif %}
+            {% if page.secondary_image_source_page %}<a href="{{ page.secondary_image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
+          </figcaption>
+        {% endif %}
+      </figure>
+    {% endif %}
+  </section>
 
   {% if page.key_points %}
-    <section class="key-points" aria-labelledby="key-points-title">
+    <section class="key-points key-points--compact" aria-labelledby="key-points-title">
       <h2 id="key-points-title">Poin Penting</h2>
       <ul>
         {% for point in page.key_points %}
@@ -105,7 +112,7 @@ layout: default
     </footer>
   {% endif %}
 
-  <section class="more-news">
+  <section class="more-news more-news--reference">
     <h2>Baca Juga</h2>
     <div class="more-news-list">
       {% assign related_count = 0 %}
