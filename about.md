@@ -1,10 +1,10 @@
 ---
 layout: page
 title: Tentang
-description: Tentang Daily Indonesia Bola.
+description: Tentang Zynelion Sports.
 permalink: /about/
 ---
 
-Daily Indonesia Bola menyajikan artikel sepak bola harian dalam format ringkas, jelas, dan mudah dipahami.
+Zynelion Sports adalah situs informasi sepak bola berisi profil pemain, cerita karier, sejarah klub, stadion, rivalitas, dan topik sepak bola yang disusun sebagai referensi jangka panjang.
 
-Artikel dibuat sebagai konten original berbasis topik berita publik, dengan fokus pada konteks, dampak, dan poin penting untuk pembaca.
+Konten baru sebaiknya dibuat dari sumber yang jelas, bukan dari tebakan AI. Untuk artikel otomatis, sumber dan gambar perlu dicatat di Google Sheets agar informasi tetap akurat.

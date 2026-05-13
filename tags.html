@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Tags
-description: Kumpulan tag artikel Daily Indonesia Bola.
+title: Topik
+description: Kumpulan topik artikel Zynelion Sports.
 permalink: /tags/
 ---
 
@@ -9,6 +9,8 @@ permalink: /tags/
 <div class="tag-cloud">
   {% for tag in tags %}
     <a class="tag" href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
+  {% else %}
+    <p>Belum ada topik. Tag akan muncul otomatis setelah artikel pertama diterbitkan.</p>
   {% endfor %}
 </div>
 

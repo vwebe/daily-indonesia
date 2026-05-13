@@ -1,12 +1,14 @@
 ---
 layout: page
-title: Arsip
-description: Arsip artikel Daily Indonesia Bola.
+title: Archive
+description: Semua artikel Zynelion Sports.
 permalink: /archive/
 ---
 
 <ul class="post-list">
   {% for post in site.posts %}
     <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a><span>{{ post.date | date: "%d %b %Y" }}</span></li>
+  {% else %}
+    <li>Belum ada artikel. Tambahkan profil pemain atau klub dari Apps Script.</li>
   {% endfor %}
 </ul>

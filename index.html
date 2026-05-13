@@ -1,16 +1,31 @@
 ---
 layout: default
 title: Home
-description: Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, dan analisis mendalam dari lapangan ke layar kamu.
+description: Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola Indonesia maupun dunia.
 ---
 
-<!-- Breaking ticker -->
 <section class="news-ticker">
-  <strong>⚡ BREAKING</strong>
-  <span>Berita sepak bola pilihan hari ini: hasil pertandingan, transfer terbaru, klasemen liga, dan kabar timnas Indonesia.</span>
+  <strong>⚽ GUIDE</strong>
+  <span>Profil pemain, perjalanan karier, sejarah klub, stadion, rivalitas, dan informasi sepak bola yang cocok untuk dibaca kapan saja.</span>
 </section>
 
-{% include scores.html %}
+<section class="quick-hubs">
+  <a class="hub-card" href="{{ '/players/' | relative_url }}">
+    <span>👤</span>
+    <strong>Player Profiles</strong>
+    <small>Bio, posisi, klub, negara, gaya bermain, dan prestasi.</small>
+  </a>
+  <a class="hub-card" href="{{ '/clubs/' | relative_url }}">
+    <span>🏟️</span>
+    <strong>Club Profiles</strong>
+    <small>Sejarah klub, stadion, rivalitas, pemain legenda, dan trofi.</small>
+  </a>
+  <a class="hub-card" href="{{ '/stories/' | relative_url }}">
+    <span>📖</span>
+    <strong>Career Stories</strong>
+    <small>Perjalanan karier pemain dari awal hingga momen penting.</small>
+  </a>
+</section>
 
 {% assign featured = site.posts | first %}
 
@@ -18,7 +33,7 @@ description: Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, da
 <section class="news-lead">
   <article class="lead-card">
     <a class="lead-image" href="{{ featured.url | relative_url }}">
-      {% assign featured_image = featured.image | default: '/assets/img/default-news.svg' %}
+      {% assign featured_image = featured.image | default: '/assets/img/default-football.svg' %}
       {% if featured_image contains '://' %}
         <img src="{{ featured_image }}" alt="{{ featured.title | escape }}" loading="lazy">
       {% else %}
@@ -27,7 +42,7 @@ description: Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, da
     </a>
 
     <div class="lead-body">
-      <p class="post-meta">🔥 HEADLINE · {{ featured.date | date: "%d %B %Y" }}</p>
+      <p class="post-meta">⭐ FEATURED · {{ featured.date | date: "%d %B %Y" }}</p>
       <h1><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h1>
       {% if featured.description %}
         <p>{{ featured.description | strip_html | truncate: 200 }}</p>
@@ -43,7 +58,7 @@ description: Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, da
   </article>
 
   <aside class="latest-panel">
-    <h2>⚡ Terbaru</h2>
+    <h2>Terbaru</h2>
     {% for post in site.posts offset:1 limit:5 %}
       <article class="latest-item">
         <p class="latest-time">{{ post.date | date: "%d %b %Y" }}</p>
@@ -58,15 +73,15 @@ description: Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, da
 {% endif %}
 
 <div class="section-header">
-  <h2>Semua Artikel</h2>
-  <p>Berita bola terkini setiap hari</p>
+  <h2>Artikel Sepak Bola</h2>
+  <p>Profil, sejarah klub, dan cerita karier terbaru</p>
 </div>
 
 <section class="post-grid compact-grid">
   {% for post in site.posts offset:6 limit:12 %}
     <article class="post-card">
       <a class="post-card__image" href="{{ post.url | relative_url }}">
-        {% assign card_image = post.image | default: '/assets/img/default-news.svg' %}
+        {% assign card_image = post.image | default: '/assets/img/default-football.svg' %}
         {% if card_image contains '://' %}
           <img src="{{ card_image }}" alt="{{ post.title | escape }}" loading="lazy">
         {% else %}
@@ -90,7 +105,7 @@ description: Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, da
   {% else %}
     <div class="empty-state">
       <h2>Belum ada artikel lainnya</h2>
-      <p>Nantikan berita bola terbaru berikutnya.</p>
+      <p>Tambahkan profil pemain atau klub dari Apps Script.</p>
     </div>
   {% endfor %}
 </section>

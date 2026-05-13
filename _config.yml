@@ -1,5 +1,5 @@
 title: "Zynelion Sports"
-description: "Berita sepak bola terkini — jadwal, hasil, transfer, klasemen, dan analisis mendalam dari lapangan ke layar kamu."
+description: "Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola Indonesia maupun dunia."
 url: "https://sports.zynelion.com"
 baseurl: ""
 lang: "id-ID"
@@ -22,4 +22,4 @@ defaults:
     values:
       layout: post
       author: "Zynelion Sports"
-      image: "/assets/img/default-news.svg"
+      image: "/assets/img/default-football.svg"
