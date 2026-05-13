@@ -1,12 +1,6 @@
-# ======================
-# THEME
-# ======================
 remote_theme: "mmistakes/minimal-mistakes"
 minimal_mistakes_skin: "default"
 
-# ======================
-# SITE SETTINGS
-# ======================
 title: "Zynelion Sports"
 description: "Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola Indonesia maupun dunia."
 url: "https://sports.zynelion.com"
@@ -14,18 +8,12 @@ baseurl: ""
 locale: "id-ID"
 timezone: Asia/Jakarta
 
-# ======================
-# PERMALINK & PLUGINS
-# ======================
 permalink: /:year/:month/:day/:title/
 
 plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-# ======================
-# DEFAULTS
-# ======================
 defaults:
   - scope:
       path: ""
