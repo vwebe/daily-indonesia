@@ -1,34 +1,54 @@
 ---
-layout: page
+layout: default
 title: Club Profiles
 description: Profil klub sepak bola: sejarah, stadion, rivalitas, pemain legenda, dan trofi.
 permalink: /clubs/
 ---
 
+<section class="collection-hero">
+  <p class="post-meta">FOOTBALL GUIDE</p>
+  <h1>Club Profiles</h1>
+  <p>Profil klub sepak bola berisi sejarah, stadion, identitas, rivalitas, pemain legenda, dan trofi penting.</p>
+</section>
+
 {% assign filtered_posts = site.posts | where_exp: "post", "post.categories contains 'clubs'" %}
+
+<div class="section-header">
+  <h2>Profil Klub</h2>
+  <p>{{ filtered_posts.size }} artikel</p>
+</div>
+
 {% if filtered_posts.size > 0 %}
 <section class="post-grid compact-grid">
   {% for post in filtered_posts %}
     <article class="post-card">
-      <a class="post-card__image" href="{{ post.url | relative_url }}">
+      <a class="post-card__image" href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">
         {% assign card_image = post.image | default: '/assets/img/default-football.svg' %}
         {% if card_image contains '://' %}
           <img src="{{ card_image }}" alt="{{ post.title | escape }}" loading="lazy">
         {% else %}
           <img src="{{ card_image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
         {% endif %}
+        <span class="sr-only">{{ post.title }}</span>
       </a>
       <div class="post-card__body">
         <p class="post-meta">{{ post.date | date: "%d %B %Y" }}</p>
         <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-        {% if post.description %}<p class="latest-excerpt">{{ post.description | strip_html | truncate: 110 }}</p>{% endif %}
+        {% if post.description %}<p class="latest-excerpt">{{ post.description | strip_html | truncate: 120 }}</p>{% endif %}
+        {% if post.tags %}
+          <div class="tag-row">
+            {% for tag in post.tags limit:2 %}
+              <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
     </article>
   {% endfor %}
 </section>
 {% else %}
 <div class="empty-state">
-  <h2>Belum ada artikel</h2>
+  <h2>Belum ada profil klub</h2>
   <p>Posting baru dengan category <strong>clubs</strong> akan tampil otomatis di halaman ini.</p>
 </div>
 {% endif %}
