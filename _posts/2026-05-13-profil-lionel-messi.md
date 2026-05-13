@@ -1,0 +1,27 @@
+---
+layout: post
+title: "Profil Pemain: Lionel Messi"
+description: "Profil Lionel Messi lengkap berisi perjalanan karier, klub, gaya bermain, prestasi, dan perannya dalam sepak bola dunia."
+date: 2026-05-13 18:14:06 +0700
+categories: [players]
+tags: ["Lionel Messi", "profil Lionel Messi", "karier Lionel Messi", "Argentina", "Barcelona", "Inter Miami", "Player Profile", "football"]
+image: "https://r2.thesportsdb.com/images/media/player/thumb/kpfsvp1725295651.jpg"
+image_caption: "Lionel Messi"
+quick_facts:
+  - label: "Negara"
+    value: "Argentina"
+source_urls:
+  - "https://en.wikipedia.org/wiki/Lionel_Messi"
+---
+
+<nav class="toc"><h2>Daftar Isi</h2><ul><li><a href="#biodata">Biodata dan Informasi Dasar</a></li><li><a href="#karier-klub">Karier Klub</a></li><li><a href="#internasional">Penampilan Internasional</a></li><li><a href="#gaya-bermain">Gaya dan Posisi Bermain</a></li><li><a href="#prestasi">Prestasi dan Penghargaan</a></li></ul></nav><h2 id="biodata">Biodata dan Informasi Dasar</h2><p>Lionel Andrés Messi adalah seorang pemain sepak bola profesional Argentina yang bermain sebagai penyerang untuk Inter Miami dan tim nasional Argentina. Ia lahir pada 24 Juni 1987 di Rosario, Argentina. Messi secara luas dianggap sebagai salah satu pemain terhebat dalam sejarah sepak bola.</p><table><thead><tr><th>Nama Lengkap</th><th>Tanggal Lahir</th><th>Kebangsaan</th><th>Posisi</th><th>Klub Saat Ini</th><th>Nomor Punggung</th></tr></thead><tbody><tr><td>Lionel Andrés Messi</td><td>24 Juni 1987</td><td>Argentina</td><td>Penyerang</td><td>Inter Miami</td><td>—</td></tr></tbody></table><h2 id="karier-klub">Karier Klub</h2><p>Messi memulai karier profesionalnya di FC Barcelona pada tahun 2004, di mana ia menghabiskan sebagian besar kariernya sebelum pindah ke Paris Saint-Germain pada tahun 2021. Pada Juli 2023, ia bergabung dengan Inter Miami.</p><ul><li>2004–2021 – Barcelona (memulai debut profesionalnya di tim utama pada Oktober 2004, memenangkan 34 trofi klub termasuk sepuluh gelar La Liga dan empat Liga Champions UEFA)</li><li>2021–2023 – Paris Saint-Germain (memenangkan gelar Ligue 1 dalam dua musim)</li><li>2023–sekarang – Inter Miami (membawa klub meraih gelar MLS Cup pertama pada 2025)</li></ul><h2 id="internasional">Penampilan Internasional</h2><p>Messi adalah pencetak gol terbanyak sepanjang masa dan pemain dengan penampilan terbanyak untuk tim nasional Argentina. Ia memenangkan medali emas di Olimpiade Musim Panas 2008 dan memimpin Argentina meraih gelar Copa América pada 2021 dan Piala Dunia FIFA pada 2022.</p><ul><li>Debut senior pada 2005.</li><li>Memenangkan medali emas Olimpiade 2008.</li><li>Memimpin Argentina ke final Piala Dunia 2014, Copa América 2015, dan Copa América Centenario 2016.</li><li>Memenangkan Copa América 2021.</li><li>Memenangkan Piala Dunia FIFA 2022.</li><li>Memenangkan Copa América 2024.</li></ul><h2 id="gaya-bermain">Gaya dan Posisi Bermain</h2><p>Messi dikenal karena kemampuan dribblingnya yang luar biasa, visi bermain, umpan akurat, dan penyelesaian akhir yang mematikan. Ia sering beroperasi sebagai penyerang atau gelandang serang, mampu menciptakan peluang bagi dirinya sendiri dan rekan satu timnya.</p><ul><li>Kemampuan dribbling yang luar biasa.</li><li>Visi bermain dan umpan terobosan yang tajam.</li><li>Penyelesaian akhir yang klinis dengan kedua kaki.</li><li>Kemampuan mengeksekusi tendangan bebas yang mematikan.</li></ul><h2 id="prestasi">Prestasi dan Penghargaan</h2><p>Messi adalah pemain paling berprestasi dalam sejarah sepak bola profesional, dengan rekor individu dan trofi tim yang tak terhitung jumlahnya. Ia telah memenangkan delapan Ballon d'Or, enam Sepatu Emas Eropa, dan banyak penghargaan lainnya sepanjang kariernya.</p><ul><li>Memenangkan 46 trofi tim.</li><li>Pencetak gol terbanyak dalam satu tahun kalender (91 gol).</li><li>Pencetak gol terbanyak untuk satu klub (672 gol untuk Barcelona).</li><li>Pencetak gol terbanyak di La Liga (474 gol).</li><li>Pemberi assist terbanyak dalam sepak bola internasional (61 assist).</li><li>Kontribusi gol terbanyak di Piala Dunia FIFA (21).</li><li>Kontribusi gol terbanyak di Copa América (32).</li><li>Lebih dari 900 gol karier senior dan lebih dari 400 assist.</li><li>Delapan Ballon d'Or.</li><li>Enam Sepatu Emas Eropa.</li><li>Delapan kali dinobatkan sebagai pemain terbaik dunia oleh FIFA.</li><li>Pemain Terbaik Pria Sepanjang Masa IFFHS (2025).</li><li>Laureus World Sportsman of the Year (2020, 2023).</li><li>Time Athlete of the Year (2023).</li><li>Presidential Medal of Freedom (2025).</li><li>Sepuluh gelar La Liga.</li><li>Empat Liga Champions UEFA.</li><li>Satu MLS Cup.</li></ul>
+
+<h2 id="faq">FAQ</h2>
+<h3>Kapan dan di mana Lionel Messi lahir?</h3>
+<p>Lionel Messi lahir pada 24 Juni 1987 di Rosario, Santa Fe, Argentina.</p>
+<h3>Klub mana saja yang pernah dibela Lionel Messi?</h3>
+<p>Lionel Messi pernah bermain untuk Barcelona, Paris Saint-Germain, dan saat ini bermain untuk Inter Miami.</p>
+<h3>Apa saja penghargaan individu terbesar yang diraih Lionel Messi?</h3>
+<p>Lionel Messi telah memenangkan delapan Ballon d&#39;Or, enam Sepatu Emas Eropa, dan delapan kali dinobatkan sebagai pemain terbaik dunia oleh FIFA.</p>
+<h3>Trofi internasional apa saja yang dimenangkan Lionel Messi bersama Argentina?</h3>
+<p>Lionel Messi telah memenangkan medali emas Olimpiade 2008, Copa América 2021, Piala Dunia FIFA 2022, dan Copa América 2024 bersama tim nasional Argentina.</p>
