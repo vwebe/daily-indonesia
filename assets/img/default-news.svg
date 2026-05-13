@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
-  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#052e16"/><stop offset=".6" stop-color="#166534"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs>
-  <rect width="1200" height="675" fill="url(#g)"/>
-  <circle cx="970" cy="120" r="190" fill="#ffffff" opacity=".12"/>
-  <circle cx="1030" cy="170" r="95" fill="#ffffff" opacity=".14"/>
-  <text x="80" y="285" font-family="Arial, sans-serif" font-size="74" font-weight="800" fill="#fff">Daily Indonesia Bola</text>
-  <text x="84" y="355" font-family="Arial, sans-serif" font-size="32" fill="#dcfce7">Berita sepak bola harian Indonesia dan dunia</text>
-  <rect x="80" y="410" width="320" height="8" rx="4" fill="#bbf7d0"/>
-</svg>
