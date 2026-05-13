@@ -1,25 +1,42 @@
+# Site Settings
 title: "Zynelion Sports"
 description: "Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola Indonesia maupun dunia."
 url: "https://sports.zynelion.com"
 baseurl: ""
-lang: "id-ID"
-timezone: "Asia/Jakarta"
+locale: "id-ID"
+timezone: Asia/Jakarta
+language: id-ID
 
+# Theme
+remote_theme: "mmistakes/minimal-mistakes"
+minimal_mistakes_skin: "default"
+
+# Permalink
 permalink: /:year/:month/:day/:title/
-future: false
 
+# Plugins
 plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-feed:
-  path: feed.xml
-
+# Defaults
 defaults:
   - scope:
       path: ""
-      type: "posts"
+      type: posts
     values:
-      layout: post
+      layout: single
       author: "Zynelion Sports"
-      image: "/assets/img/default-football.svg"
+      toc: true
+      toc_label: "Daftar Isi"
+      classes: wide
+
+# Author
+author:
+  name: "Zynelion Sports"
+
+# Social (optional - you can fill later)
+social:
+  links:
+    - https://twitter.com/
+    - https://instagram.com/
