@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<article class="article">
+<article class="article article--reference">
   <header class="article-header">
     <p class="post-meta">
       {{ page.categories | first | replace: '-', ' ' | upcase | default: "FOOTBALL GUIDE" }} &nbsp;·&nbsp; {{ page.date | date: "%d %B %Y" }}
@@ -15,26 +15,82 @@ layout: default
   </header>
 
   {% assign post_image = page.image | default: '/assets/img/default-football.svg' %}
-  {% if post_image %}
-    <figure class="article-image">
-      {% if post_image contains '://' %}
-        <img src="{{ post_image }}" alt="{{ page.title | escape }}" loading="lazy">
-      {% else %}
-        <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
+  {% assign secondary_image = page.secondary_image | default: page.image_2 %}
+
+  <div class="article-reference-grid">
+    {% if post_image %}
+      <figure class="article-image article-image--primary">
+        {% if post_image contains '://' %}
+          <img src="{{ post_image }}" alt="{{ page.title | escape }}" loading="lazy">
+        {% else %}
+          <img src="{{ post_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
+        {% endif %}
+
+        {% if page.image_caption or page.image_credit or page.image_license %}
+          <figcaption>
+            {% if page.image_caption %}{{ page.image_caption }}{% endif %}
+            {% if page.image_credit %}<span class="image-credit">Credit: {{ page.image_credit }}</span>{% endif %}
+            {% if page.image_license %}<span class="image-license">License: {{ page.image_license }}</span>{% endif %}
+            {% if page.image_source_page %}<a href="{{ page.image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
+          </figcaption>
+        {% endif %}
+      </figure>
+    {% endif %}
+
+    <aside class="article-side-panel">
+      {% if page.quick_facts %}
+        <section class="quick-facts" aria-labelledby="quick-facts-title">
+          <h2 id="quick-facts-title">Fakta Singkat</h2>
+          <dl>
+            {% for item in page.quick_facts %}
+              {% if item.label and item.value %}
+                <div>
+                  <dt>{{ item.label }}</dt>
+                  <dd>{{ item.value }}</dd>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </dl>
+        </section>
       {% endif %}
 
-      {% if page.image_caption or page.image_credit or page.image_license %}
+      <nav class="article-toc" aria-label="Daftar isi artikel">
+        <h2>Daftar Isi</h2>
+        <ol id="article-toc-list"></ol>
+      </nav>
+    </aside>
+  </div>
+
+  {% if secondary_image %}
+    <figure class="article-image article-image--secondary">
+      {% if secondary_image contains '://' %}
+        <img src="{{ secondary_image }}" alt="Gambar pendukung {{ page.title | escape }}" loading="lazy">
+      {% else %}
+        <img src="{{ secondary_image | relative_url }}" alt="Gambar pendukung {{ page.title | escape }}" loading="lazy">
+      {% endif %}
+      {% if page.secondary_image_caption or page.secondary_image_credit or page.secondary_image_license %}
         <figcaption>
-          {% if page.image_caption %}{{ page.image_caption }}{% endif %}
-          {% if page.image_credit %}<span class="image-credit">Credit: {{ page.image_credit }}</span>{% endif %}
-          {% if page.image_license %}<span class="image-license">License: {{ page.image_license }}</span>{% endif %}
-          {% if page.image_source_page %}<a href="{{ page.image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
+          {% if page.secondary_image_caption %}{{ page.secondary_image_caption }}{% endif %}
+          {% if page.secondary_image_credit %}<span class="image-credit">Credit: {{ page.secondary_image_credit }}</span>{% endif %}
+          {% if page.secondary_image_license %}<span class="image-license">License: {{ page.secondary_image_license }}</span>{% endif %}
+          {% if page.secondary_image_source_page %}<a href="{{ page.secondary_image_source_page }}" rel="nofollow noopener" target="_blank">Image source</a>{% endif %}
         </figcaption>
       {% endif %}
     </figure>
   {% endif %}
 
-  <div class="article-body">
+  {% if page.key_points %}
+    <section class="key-points" aria-labelledby="key-points-title">
+      <h2 id="key-points-title">Poin Penting</h2>
+      <ul>
+        {% for point in page.key_points %}
+          <li>{{ point }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <div class="article-body" id="article-body">
     {{ content }}
   </div>
 
@@ -77,3 +133,31 @@ layout: default
     </div>
   </section>
 </article>
+
+<script>
+(function () {
+  var body = document.getElementById('article-body');
+  var list = document.getElementById('article-toc-list');
+  if (!body || !list) return;
+  var headings = body.querySelectorAll('h2');
+  if (!headings.length) {
+    var toc = list.closest('.article-toc');
+    if (toc) toc.style.display = 'none';
+    return;
+  }
+  headings.forEach(function (heading, index) {
+    if (!heading.id) {
+      heading.id = 'section-' + (index + 1) + '-' + heading.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-');
+    }
+    var item = document.createElement('li');
+    var link = document.createElement('a');
+    link.href = '#' + heading.id;
+    link.textContent = heading.textContent;
+    item.appendChild(link);
+    list.appendChild(item);
+  });
+})();
+</script>
