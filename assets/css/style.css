@@ -276,9 +276,9 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
   position: absolute;
   top: 0; left: 0;
   width: 100%;
-  height: 112%;
+  height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center center;
   display: block;
   transition: transform .4s ease;
 }
@@ -444,9 +444,9 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
   position: absolute;
   top: 0; left: 0;
   width: 100%;
-  height: 112%;
+  height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center center;
   display: block;
   transition: transform .35s ease;
 }
@@ -667,9 +667,6 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
 .article-image img {
   display: block;
   width: 100%;
-  /* Cut bottom 12% — hides the black AI-generated strip */
-  clip-path: inset(0 0 12% 0);
-  margin-bottom: -12%;
 }
 
 .article-image figcaption {
@@ -1315,13 +1312,17 @@ body {
 
 .profile-photo img {
   width: 100%;
-  height: 320px;
-  object-fit: cover;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
   background: var(--bg2);
+  display: block;
 }
 
 .profile-photo-secondary img {
-  height: 240px;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
 }
 
 .profile-photo figcaption {
@@ -1447,12 +1448,6 @@ body {
   margin-right: auto;
 }
 
-.lead-image img,
-.post-card__image img {
-  max-height: 260px;
-  object-fit: cover;
-}
-
 .lead-card { min-height: unset; }
 
 .latest-panel .empty-state,
@@ -1466,7 +1461,7 @@ body {
 @media (max-width: 860px) {
   .profile-media.has-secondary { grid-template-columns: 1fr; }
   .profile-photo img,
-  .profile-photo-secondary img { height: 250px; }
+  .profile-photo-secondary img { height: auto; max-height: 420px; }
   .quick-facts dl,
   .article-toc ol { grid-template-columns: 1fr; }
 }
@@ -1474,7 +1469,7 @@ body {
 @media (max-width: 520px) {
   .profile-article { padding-left: .1rem; padding-right: .1rem; }
   .profile-photo img,
-  .profile-photo-secondary img { height: 220px; }
+  .profile-photo-secondary img { height: auto; max-height: 360px; }
   .profile-header h1 { font-size: 2.15rem; }
 }
 
@@ -1538,12 +1533,12 @@ body {
   color: var(--text2);
 }
 
-.profile-photo img { height: 280px; }
-.profile-photo-secondary img { height: 220px; }
+.profile-photo img { height: auto; max-height: 480px; }
+.profile-photo-secondary img { height: auto; max-height: 380px; }
 
 @media (max-width: 860px) {
   .profile-body .toc ul { grid-template-columns: 1fr; }
   .profile-body table { display: block; overflow-x: auto; white-space: nowrap; }
   .profile-photo img,
-  .profile-photo-secondary img { height: 230px; }
+  .profile-photo-secondary img { height: auto; max-height: 380px; }
 }
