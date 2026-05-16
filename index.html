@@ -4,112 +4,131 @@ title: Home
 description: Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola Indonesia maupun dunia.
 ---
 
-<section class="news-ticker">
-  <strong>GUIDE</strong>
-  <span>Profil pemain, perjalanan karier, sejarah klub, stadion, rivalitas, dan informasi sepak bola yang cocok dibaca kapan saja.</span>
-</section>
-
-<section class="quick-hubs">
-  <a class="hub-card hub-players" href="{{ '/players/' | relative_url }}">
-    <div class="hub-card-bar"></div>
-    <div class="hub-card-body">
-      <div class="hub-card-eyebrow">Category</div>
+<!-- Hub cards -->
+<div class="section-head" style="margin-top:2rem;">
+  <h2>Kategori</h2>
+</div>
+<div class="hub-row">
+  <a class="hub-card" href="{{ '/players/' | relative_url }}">
+    <span class="hub-icon">🏃</span>
+    <div class="hub-text">
       <strong>Player Profiles</strong>
-      <small>Bio, posisi, klub, negara, gaya bermain, dan prestasi.</small>
-      <div class="hub-card-arrow">Explore →</div>
+      <small>Bio, posisi, klub, negara &amp; gaya bermain</small>
     </div>
+    <span class="hub-arrow">→</span>
   </a>
-  <a class="hub-card hub-clubs" href="{{ '/clubs/' | relative_url }}">
-    <div class="hub-card-bar"></div>
-    <div class="hub-card-body">
-      <div class="hub-card-eyebrow">Category</div>
+  <a class="hub-card" href="{{ '/clubs/' | relative_url }}">
+    <span class="hub-icon">🏟️</span>
+    <div class="hub-text">
       <strong>Club Profiles</strong>
-      <small>Sejarah klub, stadion, rivalitas, pemain legenda, dan trofi.</small>
-      <div class="hub-card-arrow">Explore →</div>
+      <small>Sejarah, stadion, rivalitas &amp; trofi</small>
     </div>
+    <span class="hub-arrow">→</span>
   </a>
-  <a class="hub-card hub-stories" href="{{ '/stories/' | relative_url }}">
-    <div class="hub-card-bar"></div>
-    <div class="hub-card-body">
-      <div class="hub-card-eyebrow">Category</div>
+  <a class="hub-card" href="{{ '/stories/' | relative_url }}">
+    <span class="hub-icon">📖</span>
+    <div class="hub-text">
       <strong>Career Stories</strong>
-      <small>Perjalanan karier pemain dari awal hingga momen penting.</small>
-      <div class="hub-card-arrow">Explore →</div>
+      <small>Perjalanan karier dari awal hingga puncak</small>
     </div>
+    <span class="hub-arrow">→</span>
   </a>
-</section>
+</div>
 
 {% assign featured = site.posts | first %}
+{% assign second_post = site.posts | offset: 1 | first %}
 
 {% if featured %}
-<section class="news-lead">
-  <article class="lead-card">
-    <a class="lead-image" href="{{ featured.url | relative_url }}" aria-label="Read {{ featured.title | escape }}">
-      {% assign featured_image = featured.image | default: '/assets/img/default-football.svg' %}
-      {% if featured_image contains '://' %}
-        <img src="{{ featured_image }}" alt="{{ featured.title | escape }}" loading="lazy">
+<!-- Hero grid -->
+<section class="hero-section">
+  <div class="hero-grid">
+
+    <!-- Featured (left) -->
+    <a class="featured-card" href="{{ featured.url | relative_url }}">
+      {% assign featured_img = featured.image | default: '/assets/img/default-football.svg' %}
+      {% if featured_img contains '://' %}
+        <img class="featured-img" src="{{ featured_img }}" alt="{{ featured.title | escape }}" loading="eager">
       {% else %}
-        <img src="{{ featured_image | relative_url }}" alt="{{ featured.title | escape }}" loading="lazy">
+        <img class="featured-img" src="{{ featured_img | relative_url }}" alt="{{ featured.title | escape }}" loading="eager">
       {% endif %}
+      <div class="featured-overlay"></div>
+      <div class="featured-body">
+        <div class="featured-eyebrow">
+          <span class="eyebrow-dot"></span>
+          FEATURED &nbsp;·&nbsp; {{ featured.categories | first | replace: '-', ' ' | upcase | default: "FOOTBALL GUIDE" }}
+        </div>
+        <h1 class="featured-title">{{ featured.title }}</h1>
+        {% if featured.description %}
+          <p class="featured-desc">{{ featured.description | strip_html | truncate: 160 }}</p>
+        {% endif %}
+        <p class="featured-meta">{{ featured.date | date: "%d %B %Y" }}</p>
+      </div>
     </a>
 
-    <div class="lead-body">
-      <p class="post-meta">FEATURED · {{ featured.date | date: "%d %B %Y" }}</p>
-      <h1><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h1>
-      {% if featured.description %}
-        <p>{{ featured.description | strip_html | truncate: 170 }}</p>
+    <!-- Side panel (right) -->
+    <div class="side-panel">
+      {% if second_post %}
+      <a class="side-top" href="{{ second_post.url | relative_url }}">
+        <div class="side-top-thumb">
+          {% assign s2_img = second_post.image | default: '/assets/img/default-football.svg' %}
+          {% if s2_img contains '://' %}
+            <img src="{{ s2_img }}" alt="{{ second_post.title | escape }}" loading="lazy">
+          {% else %}
+            <img src="{{ s2_img | relative_url }}" alt="{{ second_post.title | escape }}" loading="lazy">
+          {% endif %}
+        </div>
+        <div class="side-top-body">
+          <div class="side-eyebrow">{{ second_post.categories | first | replace: '-', ' ' | upcase | default: "ARTIKEL" }}</div>
+          <div class="side-top-title">{{ second_post.title }}</div>
+          <div class="side-top-meta">{{ second_post.date | date: "%d %B %Y" }}</div>
+        </div>
+      </a>
       {% endif %}
-      {% if featured.tags %}
-      <div class="tag-row" style="margin-top:auto; padding-top:1rem;">
-        {% for tag in featured.tags limit:3 %}
-          <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </div>
-  </article>
 
-  <aside class="latest-panel">
-    <h2>Terbaru</h2>
-    {% assign latest_count = 0 %}
-    {% for post in site.posts offset:1 limit:5 %}
-      {% assign latest_count = latest_count | plus: 1 %}
-      <article class="latest-item">
-        <p class="latest-time">{{ post.date | date: "%d %b %Y" }}</p>
-        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-        {% if post.description %}
-          <p class="latest-excerpt">{{ post.description | strip_html | truncate: 95 }}</p>
+      <div class="side-list">
+        <div class="side-list-head">Terbaru</div>
+        {% assign num = 1 %}
+        {% for post in site.posts offset:2 limit:6 %}
+          <div class="side-item">
+            <div class="side-num">{{ num }}</div>
+            <div class="side-text">
+              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+              <div class="side-date">{{ post.date | date: "%d %b %Y" }}</div>
+            </div>
+          </div>
+          {% assign num = num | plus: 1 %}
+        {% endfor %}
+        {% if num == 1 %}
+          <p style="font-size:.82rem;color:var(--faint);padding:.5rem 0;">Artikel berikutnya akan tampil di sini.</p>
         {% endif %}
-      </article>
-    {% endfor %}
-    {% if latest_count == 0 %}
-      <p class="latest-excerpt">Artikel berikutnya akan tampil di sini setelah post kedua diterbitkan.</p>
-    {% endif %}
-  </aside>
+      </div>
+    </div>
+
+  </div>
 </section>
 {% endif %}
 
-<div class="section-header">
+<!-- Post grid -->
+<div class="section-head">
   <h2>Artikel Sepak Bola</h2>
-  <p>Profil, sejarah klub, dan cerita karier terbaru</p>
+  <span>Profil, sejarah &amp; cerita karier terbaru</span>
+  <a class="see-all" href="{{ '/archive/' | relative_url }}">Lihat Semua →</a>
 </div>
 
-<section class="post-grid compact-grid">
+<section class="post-grid">
   {% for post in site.posts offset:1 limit:12 %}
     <article class="post-card">
       <a class="post-card__image" href="{{ post.url | relative_url }}">
-        {% assign card_image = post.image | default: '/assets/img/default-football.svg' %}
-        {% if card_image contains '://' %}
-          <img src="{{ card_image }}" alt="{{ post.title | escape }}" loading="lazy">
+        {% assign card_img = post.image | default: '/assets/img/default-football.svg' %}
+        {% if card_img contains '://' %}
+          <img src="{{ card_img }}" alt="{{ post.title | escape }}" loading="lazy">
         {% else %}
-          <img src="{{ card_image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+          <img src="{{ card_img | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
         {% endif %}
       </a>
-
       <div class="post-card__body">
         <p class="post-meta">{{ post.date | date: "%d %B %Y" }}</p>
         <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-
         {% if post.tags %}
           <div class="tag-row">
             {% for tag in post.tags limit:2 %}
