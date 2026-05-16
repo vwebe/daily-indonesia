@@ -1,6 +1,3 @@
-remote_theme: "mmistakes/minimal-mistakes"
-minimal_mistakes_skin: "default"
-
 title: "Zynelion Sports"
 description: "Profil pemain, cerita karier, sejarah klub, dan panduan sepak bola Indonesia maupun dunia."
 url: "https://sports.zynelion.com"
@@ -19,8 +16,5 @@ defaults:
       path: ""
       type: posts
     values:
-      layout: single
+      layout: post
       author: "Zynelion Sports"
-      toc: true
-      toc_label: "Daftar Isi"
-      classes: wide
