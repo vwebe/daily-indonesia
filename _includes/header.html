@@ -1,11 +1,27 @@
+<!-- Top bar ticker -->
+<div class="top-bar">
+  <span class="top-bar-label">⚽ Zynelion Sports</span>
+  <div class="top-bar-ticker">
+    <div class="ticker-track">
+      <span>Profil Pemain · Sejarah Klub · Perjalanan Karier · Sepak Bola Dunia & Indonesia</span>
+      <span>Player Profiles · Club History · Career Stories · World & Indonesian Football</span>
+      <span>Profil Pemain · Sejarah Klub · Perjalanan Karier · Sepak Bola Dunia & Indonesia</span>
+      <span>Player Profiles · Club History · Career Stories · World & Indonesian Football</span>
+    </div>
+  </div>
+</div>
+
 <header class="site-header">
-  <div class="header-inner">
+  <div class="header-main">
     <a class="brand" href="{{ '/' | relative_url }}">
-      
-      <span class="brand-text">ZYNELION<span class="brand-accent">SPORTS</span></span>
+      <div class="brand-gem">ZS</div>
+      <div class="brand-wordmark">
+        <span class="brand-top">ZYNELION</span>
+        <span class="brand-bottom">Sports</span>
+      </div>
     </a>
 
-    <nav class="site-nav">
+    <nav class="site-nav" aria-label="Main navigation">
       <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
       <a href="{{ '/players/' | relative_url }}" class="nav-link">Players</a>
       <a href="{{ '/clubs/' | relative_url }}" class="nav-link">Clubs</a>
@@ -17,9 +33,19 @@
       <span class="live-dot"></span>
       <span>FOOTBALL GUIDE</span>
     </div>
+
+    <button class="menu-toggle" aria-label="Toggle navigation" onclick="this.closest('.site-header').querySelector('.mobile-nav').classList.toggle('open')">☰</button>
   </div>
 
-  <div class="header-categories">
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
+    <a href="{{ '/players/' | relative_url }}" class="nav-link">Players</a>
+    <a href="{{ '/clubs/' | relative_url }}" class="nav-link">Clubs</a>
+    <a href="{{ '/stories/' | relative_url }}" class="nav-link">Career Stories</a>
+    <a href="{{ '/archive/' | relative_url }}" class="nav-link">Archive</a>
+  </nav>
+
+  <div class="header-cats">
     <div class="cats-inner">
       <a href="{{ '/players/' | relative_url }}" class="cat-pill">Player Profiles</a>
       <a href="{{ '/stories/' | relative_url }}" class="cat-pill">Career Stories</a>
@@ -27,7 +53,9 @@
       <a href="{{ '/tags/' | relative_url }}#timnas-indonesia" class="cat-pill">Timnas Indonesia</a>
       <a href="{{ '/tags/' | relative_url }}#barcelona" class="cat-pill">Barcelona</a>
       <a href="{{ '/tags/' | relative_url }}#real-madrid" class="cat-pill">Real Madrid</a>
-      <a href="{{ '/tags/' | relative_url }}#manchester-united" class="cat-pill">Manchester United</a>
+      <a href="{{ '/tags/' | relative_url }}#manchester-united" class="cat-pill">Man United</a>
+      <a href="{{ '/tags/' | relative_url }}#premier-league" class="cat-pill">Premier League</a>
+      <a href="{{ '/tags/' | relative_url }}#la-liga" class="cat-pill">La Liga</a>
     </div>
   </div>
 </header>
