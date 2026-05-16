@@ -203,8 +203,8 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 2rem;
-  padding: .7rem 1.1rem;
+  margin-bottom: 1.5rem;
+  padding: .6rem 1rem;
   background: var(--card);
   border: 1px solid var(--line);
   border-left: 4px solid var(--accent);
@@ -214,18 +214,18 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
 
 .news-ticker strong {
   flex-shrink: 0;
-  padding: .2rem .7rem;
+  padding: .2rem .65rem;
   background: var(--accent);
   color: #000;
   border-radius: 5px;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: .95rem;
+  font-size: .9rem;
   letter-spacing: .1em;
 }
 
 .news-ticker span {
   color: var(--text2);
-  font-size: .88rem;
+  font-size: .86rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -237,12 +237,12 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
 
 .news-lead {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 1fr 320px;
   gap: 1.25rem;
   margin-bottom: 3rem;
+  align-items: start;
 }
 
-/* Lead card */
 .lead-card {
   position: relative;
   border-radius: var(--r-lg);
@@ -250,65 +250,64 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
   background: var(--card);
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
+  min-height: 460px;
   display: flex;
   flex-direction: column;
 }
 
 .lead-image {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  background: var(--bg3);
-  /* aspect-ratio trick: 16/9 visible, img is 112% tall so bottom 12% clips off */
-  aspect-ratio: 16 / 10.08;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .lead-image::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 40%, rgba(13,15,20,.85) 100%);
+  background: linear-gradient(to bottom, rgba(13,15,20,.1) 0%, rgba(13,15,20,.3) 45%, rgba(13,15,20,.93) 100%);
   z-index: 1;
-  pointer-events: none;
 }
 
 .lead-image img {
-  position: absolute;
-  top: 0; left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
   display: block;
-  transition: transform .4s ease;
+  transition: transform .5s ease;
 }
 
 .lead-card:hover .lead-image img { transform: scale(1.03); }
 
 .lead-body {
-  padding: 1.5rem 1.75rem 1.75rem;
-  flex: 1;
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding: 2rem 1.75rem 1.75rem;
   display: flex;
   flex-direction: column;
 }
 
 .lead-body h1 {
-  margin: .5rem 0 .85rem;
+  margin: .4rem 0 .75rem;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  font-size: clamp(1.9rem, 3.8vw, 2.9rem);
   font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -.02em;
+  line-height: 1.05;
+  letter-spacing: .01em;
   color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,.5);
 }
 
 .lead-body h1 a:hover { color: var(--accent); }
 
-.lead-body p {
-  color: var(--text2);
-  font-size: .97rem;
-  line-height: 1.7;
-  flex: 1;
+.lead-body > p {
+  color: rgba(240,242,245,.82);
+  font-size: .93rem;
+  line-height: 1.65;
+  max-width: 520px;
+  text-shadow: 0 1px 6px rgba(0,0,0,.4);
 }
 
 /* Latest panel */
@@ -1028,6 +1027,8 @@ code { background: var(--bg3); padding: .2rem .45rem; border-radius: 6px; font-s
     grid-template-columns: 1fr;
   }
 
+  .lead-card { min-height: 380px; }
+
   .post-grid { grid-template-columns: repeat(2, 1fr); }
 
   .header-inner {
@@ -1078,23 +1079,6 @@ body {
 .site-header.scrolled {
   box-shadow: 0 4px 30px rgba(0,0,0,.6);
   background: rgba(10,12,17,.98);
-}
-
-/* ── Ticker scrolling marquee ── */
-.news-ticker {
-  overflow: hidden;
-}
-.ticker-inner {
-  display: inline-block;
-  animation: marquee 28s linear infinite;
-  white-space: nowrap;
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-33.333%); }
-}
-.news-ticker:hover .ticker-inner {
-  animation-play-state: paused;
 }
 
 /* ── Score cards entrance ── */
@@ -1522,8 +1506,6 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-
-.lead-card { min-height: unset; }
 
 .latest-panel .empty-state,
 .latest-panel:empty::after {
