@@ -1228,26 +1228,64 @@ body {
 }
 
 .hub-card {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  background: var(--card);
+  transition: transform .25s ease, border-color .25s ease;
+}
+
+.hub-card:hover { transform: translateY(-4px); }
+.hub-players:hover { border-color: rgba(232,255,0,.4); }
+.hub-clubs:hover   { border-color: rgba(61,139,255,.4); }
+.hub-stories:hover { border-color: rgba(255,61,61,.4); }
+
+.hub-card-bar { height: 5px; width: 100%; }
+.hub-players .hub-card-bar { background: var(--accent); }
+.hub-clubs   .hub-card-bar { background: var(--blue); }
+.hub-stories .hub-card-bar { background: var(--red); }
+
+.hub-card-body {
   display: flex;
   flex-direction: column;
   gap: .45rem;
-  padding: 1.1rem;
-  border-radius: 18px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.10);
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 12px 40px rgba(0,0,0,.18);
+  padding: 1.1rem 1.25rem 1.35rem;
 }
 
-.hub-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(20,184,166,.55);
+.hub-card-eyebrow {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text3);
 }
 
-.hub-card span { font-size: 2rem; }
-.hub-card strong { font-size: 1.05rem; color: var(--accent); }
-.hub-card small { line-height: 1.55; opacity: .82; }
+.hub-card strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  color: var(--text);
+  line-height: 1;
+}
+
+.hub-card small { font-size: .82rem; line-height: 1.55; color: var(--text3); }
+
+.hub-card-arrow {
+  margin-top: .5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.hub-players .hub-card-arrow { color: var(--accent); }
+.hub-clubs   .hub-card-arrow { color: var(--blue); }
+.hub-stories .hub-card-arrow { color: var(--red); }
 
 .article-image figcaption span,
 .article-image figcaption a {
