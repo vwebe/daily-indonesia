@@ -1,40 +1,38 @@
 ---
 layout: default
 title: Career Stories
-description: Cerita perjalanan karier pemain sepak bola dari awal karier hingga momen penting.
+description: Perjalanan karier pemain sepak bola dari awal hingga momen puncak.
+categories: [stories]
 permalink: /stories/
 ---
 
 <section class="collection-hero">
-  <p class="post-meta">FOOTBALL GUIDE</p>
+  <p class="post-meta">KATEGORI</p>
   <h1>Career Stories</h1>
-  <p>Cerita perjalanan karier pemain sepak bola dari awal karier, klub penting, momen besar, hingga warisan dalam sepak bola.</p>
+  <p>Perjalanan karier pemain sepak bola dari awal hingga momen penting dan prestasi puncak.</p>
 </section>
 
-{% assign filtered_posts = site.posts | where_exp: "post", "post.categories contains 'career-stories'" %}
-
-<div class="section-header">
-  <h2>Perjalanan Karier</h2>
-  <p>{{ filtered_posts.size }} artikel</p>
+<div class="section-head">
+  <h2>Cerita Karier</h2>
+  <span>Semua cerita karier</span>
+  <a class="see-all" href="{{ '/archive/' | relative_url }}">Semua Artikel →</a>
 </div>
 
-{% if filtered_posts.size > 0 %}
-<section class="post-grid compact-grid">
-  {% for post in filtered_posts %}
+<section class="post-grid">
+  {% assign filtered = site.posts | where_exp: "post", "post.categories contains 'stories'" %}
+  {% for post in filtered limit:24 %}
     <article class="post-card">
-      <a class="post-card__image" href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">
-        {% assign card_image = post.image | default: '/assets/img/default-football.svg' %}
-        {% if card_image contains '://' %}
-          <img src="{{ card_image }}" alt="{{ post.title | escape }}" loading="lazy">
+      <a class="post-card__image" href="{{ post.url | relative_url }}">
+        {% assign card_img = post.image | default: '/assets/img/default-football.svg' %}
+        {% if card_img contains '://' %}
+          <img src="{{ card_img }}" alt="{{ post.title | escape }}" loading="lazy">
         {% else %}
-          <img src="{{ card_image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+          <img src="{{ card_img | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
         {% endif %}
-        <span class="sr-only">{{ post.title }}</span>
       </a>
       <div class="post-card__body">
         <p class="post-meta">{{ post.date | date: "%d %B %Y" }}</p>
         <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-        {% if post.description %}<p class="latest-excerpt">{{ post.description | strip_html | truncate: 120 }}</p>{% endif %}
         {% if post.tags %}
           <div class="tag-row">
             {% for tag in post.tags limit:2 %}
@@ -44,11 +42,10 @@ permalink: /stories/
         {% endif %}
       </div>
     </article>
+  {% else %}
+    <div class="empty-state">
+      <h2>Belum ada cerita karier</h2>
+      <p>Tambahkan cerita dari Apps Script.</p>
+    </div>
   {% endfor %}
 </section>
-{% else %}
-<div class="empty-state">
-  <h2>Belum ada cerita karier</h2>
-  <p>Posting baru dengan category <strong>career-stories</strong> akan tampil otomatis di halaman ini.</p>
-</div>
-{% endif %}
